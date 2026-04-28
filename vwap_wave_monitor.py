@@ -53,7 +53,17 @@ def compute_vwap_bands(bars):
     lower_2sd = vwap_history[-1] - 2 * sd_history[-1]
     return bars[-1], upper_2sd, lower_2sd  # latest bar + bands
 
-def main(symbol='XAUUSDT'):
+def send_telegram_alert(token, chat_id, message):
+    url = f"https://api.telegram.org/bot{token}/sendMessage"
+    data = json.dumps({"chat_id": chat_id, "text": message, "parse_mode": "HTML"}).encode()
+    req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            pass  # Success
+    except Exception as e:
+        print(f"Telegram send error: {e}", file=sys.stderr)
+
+def main(symbol='XAUUSDT', telegram_token=None, telegram_chat_id=None):
     print(f"🚀 Gold Futures VWAP Wave Monitor (XAUUSDT perp, Chris Drysdale system)")
     print("Press Ctrl+C to stop")
     while True:
@@ -77,6 +87,8 @@ def main(symbol='XAUUSDT'):
 
             if alert:
                 print(alert)
+                if telegram_token and telegram_chat_id:
+                    send_telegram_alert(telegram_token, telegram_chat_id, alert.replace("🚨", "<b>🚨 ALERT</b>"))
 
             time.sleep(30)  # Poll every 30s (mid-bar updates via latest closed)
         except KeyboardInterrupt:
@@ -89,6 +101,8 @@ def main(symbol='XAUUSDT'):
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('--symbol', default='BTCUSDT', help='Futures symbol e.g. BTCUSDT ETHUSDT')
+    parser.add_argument('--symbol', default='XAUUSDT', help='Futures symbol (XAUUSDT for Gold)')
+    parser.add_argument('--telegram-token', help='Telegram bot token')
+    parser.add_argument('--telegram-chat-id', help='Telegram channel/group chat ID')
     args = parser.parse_args()
-    main(args.symbol)
+    main(args.symbol, args.telegram_token, args.telegram_chat_id)

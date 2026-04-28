@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vwap-wave-monitor
+  labels:
+    app: vwap-wave-monitor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vwap-wave-monitor
+  template:
+    metadata:
+      labels:
+        app: vwap-wave-monitor
+    spec:
+      containers:
+      - name: monitor
+        image: gcr.io/YOUR_PROJECT/vwap-wave-monitor:latest  # Build/push your image
+        env:
+        - name: TELEGRAM_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: vwap-secrets
+              key: telegram-token
+        - name: TELEGRAM_CHAT_ID
+          valueFrom:
+            secretKeyRef:
+              name: vwap-secrets
+              key: telegram-chat-id
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 100m
+            memory: 128Mi
+        livenessProbe:
+          httpGet:
+            path: /healthz  # Add /healthz endpoint if needed
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: vwap-secrets
+type: Opaque
+stringData:
+  telegram-token: YOUR_BOT_TOKEN_HERE
+  telegram-chat-id: YOUR_CHAT_ID_HERE  # e.g. -1001234567890 for channel
+---
+# Apply: kubectl apply -f k8s/deployment.yaml
+# Build: docker build -t gcr.io/PROJECT/vwap-wave-monitor . && docker push
