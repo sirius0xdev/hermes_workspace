@@ -13,7 +13,7 @@ import sys
 import math
 from datetime import datetime
 
-def fetch_klines(symbol='BTCUSDT', interval='1m', limit=500):
+def fetch_klines(symbol='XAUUSDT', interval='1m', limit=500):
     url = f"https://fapi.binance.com/fapi/v1/klines?symbol={symbol}&interval={interval}&limit={limit}"
     try:
         with urllib.request.urlopen(url, timeout=10) as resp:
@@ -53,8 +53,8 @@ def compute_vwap_bands(bars):
     lower_2sd = vwap_history[-1] - 2 * sd_history[-1]
     return bars[-1], upper_2sd, lower_2sd  # latest bar + bands
 
-def main(symbol='BTCUSDT'):
-    print(f"🚀 VWAP Wave Monitor started for {symbol} (Chris Drysdale system)")
+def main(symbol='XAUUSDT'):
+    print(f"🚀 Gold Futures VWAP Wave Monitor (XAUUSDT perp, Chris Drysdale system)")
     print("Press Ctrl+C to stop")
     while True:
         try:
