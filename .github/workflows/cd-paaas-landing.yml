@@ -46,3 +46,10 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      - name: Make GHCR package publicly accessible
+        run: |
+          echo "Ensuring GHCR package hermes_workspace is public..."
+          gh api --method PATCH /user/packages/container/hermes_workspace -f visibility=public || echo "Package visibility update skipped (package may not exist yet or is already public)"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
