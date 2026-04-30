@@ -1,12 +1,5 @@
-FROM python:3.12-slim
-
+FROM python:3.12-alpine
 WORKDIR /app
-COPY vwap_wave_monitor.py .
-
-# Healthcheck
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-  CMD python3 -c "import urllib.request; urllib.request.urlopen('https://fapi.binance.com/fapi/v1/ping')" || exit 1
-
-CMD ["python3", "vwap_wave_monitor.py", "--symbol", "XAUUSDT"]
-LABEL description="Chris Drysdale VWAP Wave Gold Futures Monitor"
-LABEL maintainer="Hermes Agent <hermes@local>"
+COPY index.html .
+EXPOSE 8080
+CMD ["python", "-m", "http.server", "8080", "--bind", "0.0.0.0"]
