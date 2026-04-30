@@ -1,623 +1,1161 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PaaAS — Private AI Teammate</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
-        
-        :root {
-            --accent: 165 243 252;
-        }
-        
-        .tail-container {
-            font-family: 'Inter', system-ui, sans-serif;
-        }
-        
-        .heading-font {
-            font-family: 'Space Grotesk', sans-serif;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sirius DevOps — Cloud-Native Infrastructure Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #09090b;
+      --bg-subtle: #0c0c0f;
+      --bg-card: #111114;
+      --border: rgba(255,255,255,0.06);
+      --text-primary: #fafafa;
+      --text-secondary: #a1a1aa;
+      --text-muted: #71717a;
+      --accent: #22d3ee;
+      --accent-dim: rgba(34, 211, 238, 0.12);
+      --accent-mid: rgba(34, 211, 238, 0.3);
+      --green: #4ade80;
+      --green-dim: rgba(74, 222, 128, 0.12);
+      --purple: #c084fc;
+      --purple-dim: rgba(192, 132, 252, 0.12);
+      --orange: #fb923c;
+      --orange-dim: rgba(251, 146, 60, 0.12);
+      --radius: 8px;
+      --font: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+      --mono: 'JetBrains Mono', 'SF Mono', ui-monospace, monospace;
+    }
 
-        .hero-bg {
-            background: radial-gradient(at center bottom, rgb(15 23 42), rgb(9 9 11));
-        }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        .nav-link {
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .nav-link:hover {
-            color: rgb(165 243 252);
-            transform: translateY(-1px);
-        }
+    html { scroll-behavior: smooth; }
 
-        .feature-card {
-            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-        }
+    body {
+      font-family: var(--font);
+      color: var(--text-primary);
+      background: var(--bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
 
-        .glass {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-        }
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 128px 128px;
+    }
 
-        .accent-glow {
-            text-shadow: 0 0 20px rgb(165 243 252);
-        }
+    /* Container */
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
 
-        .section-header {
-            position: relative;
-        }
-        
-        .section-header::after {
-            content: '';
-            position: absolute;
-            width: 48px;
-            height: 2px;
-            background: rgb(165 243 252);
-            bottom: -8px;
-            left: 0;
-        }
-    </style>
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(9, 9, 11, 0.8);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+    }
+
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .logo {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo-icon {
+      width: 20px;
+      height: 20px;
+      background: var(--accent);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--bg);
+      font-family: var(--mono);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text-primary); }
+
+    .nav-links .github-link {
+      color: var(--text-secondary);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 160px 0 100px;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(ellipse at center, rgba(34,211,238,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(34, 211, 238, 0.15);
+      border-radius: 9999px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-family: var(--mono);
+      color: var(--accent);
+      margin-bottom: 24px;
+      font-weight: 500;
+    }
+
+    .hero-badge .dot {
+      width: 6px;
+      height: 6px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+      max-width: 720px;
+    }
+
+    .hero h1 .accent { color: var(--accent); }
+
+    .hero-subtitle {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 40px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: var(--accent);
+      color: var(--bg);
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background: #06b6d9;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 6px;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: color 0.2s, border-color 0.2s;
+      cursor: pointer;
+    }
+
+    .btn-secondary:hover {
+      color: var(--text-primary);
+      border-color: rgba(255,255,255,0.15);
+    }
+
+    /* Terminal mockup */
+    .terminal {
+      margin-top: 64px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      font-family: var(--mono);
+      font-size: 13px;
+      max-width: 720px;
+    }
+
+    .terminal-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.02);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .terminal-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .terminal-dot.red { background: #ff5f57; }
+    .terminal-dot.yellow { background: #febc2e; }
+    .terminal-dot.green { background: #28c840; }
+
+    .terminal-title {
+      flex: 1;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .terminal-body {
+      padding: 16px;
+      line-height: 1.8;
+    }
+
+    .terminal-body .prompt { color: var(--green); }
+    .terminal-body .cmd { color: var(--text-primary); }
+    .terminal-body .flag { color: var(--accent); }
+    .terminal-body .comment { color: var(--text-muted); }
+    .terminal-body .output { color: var(--text-secondary); }
+    .terminal-body .success { color: var(--green); }
+    .terminal-body .warn { color: var(--orange); }
+    .terminal-body .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 16px;
+      background: var(--accent);
+      animation: blink 1s step-end infinite;
+      vertical-align: text-bottom;
+      margin-left: 2px;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* Stats bar */
+    .stats {
+      padding: 60px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+    }
+
+    .stat { text-align: center; }
+
+    .stat-value {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--accent);
+      font-family: var(--mono);
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Sections */
+    section {
+      padding: 100px 0;
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-family: var(--mono);
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+
+    .section-title {
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .section-desc {
+      font-size: 16px;
+      color: var(--text-secondary);
+      max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 48px;
+    }
+
+    /* Capabilities */
+    .capabilities-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .capability-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: border-color 0.3s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .capability-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .capability-card:hover {
+      border-color: rgba(34,211,238,0.2);
+      transform: translateY(-2px);
+    }
+
+    .capability-card:hover::before { opacity: 1; }
+
+    .capability-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      margin-bottom: 16px;
+    }
+
+    .capability-icon.cyan { background: var(--accent-dim); color: var(--accent); }
+    .capability-icon.green { background: var(--green-dim); color: var(--green); }
+    .capability-icon.purple { background: var(--purple-dim); color: var(--purple); }
+    .capability-icon.orange { background: var(--orange-dim); color: var(--orange); }
+
+    .capability-card h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .capability-card p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .capability-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .tag {
+      font-size: 11px;
+      font-family: var(--mono);
+      padding: 2px 8px;
+      border-radius: 9999px;
+      background: rgba(255,255,255,0.04);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+
+    /* Projects */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      transition: border-color 0.3s;
+    }
+
+    .project-card:hover {
+      border-color: rgba(255,255,255,0.12);
+    }
+
+    .project-card:first-child {
+      grid-template-columns: 1fr;
+    }
+
+    .project-content {
+      padding: 32px;
+    }
+
+    .project-card:first-child .project-content {
+      padding: 32px;
+    }
+
+    .project-type {
+      font-size: 11px;
+      font-family: var(--mono);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .project-content h3 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+
+    .project-content p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    .project-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .project-features li {
+      font-size: 13px;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .project-features li::before {
+      content: '→';
+      color: var(--accent);
+      font-family: var(--mono);
+      font-size: 11px;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .project-visual {
+      background: rgba(0,0,0,0.3);
+      border-left: 1px solid var(--border);
+      padding: 24px;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+      color: var(--text-muted);
+      overflow: auto;
+    }
+
+    .project-visual .hl { color: var(--accent); }
+    .project-visual .str { color: var(--green); }
+    .project-visual .key { color: var(--purple); }
+
+    /* Tech Stack */
+    .stack-section {
+      background: var(--bg-subtle);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .stack-category h4 {
+      font-size: 13px;
+      font-family: var(--mono);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+
+    .stack-items {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .stack-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .stack-item .version {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      background: rgba(255,255,255,0.04);
+      padding: 2px 8px;
+      border-radius: 9999px;
+    }
+
+    /* Architecture Diagram */
+    .arch-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      overflow-x: auto;
+    }
+
+    .arch-container svg {
+      width: 100%;
+      max-width: 800px;
+      height: auto;
+      margin: 0 auto;
+      display: block;
+    }
+
+    /* Contact */
+    .contact {
+      text-align: center;
+      padding: 120px 0;
+    }
+
+    .contact h2 {
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+
+    .contact p {
+      color: var(--text-secondary);
+      font-size: 16px;
+      margin-bottom: 32px;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 0;
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+      .capabilities-grid { grid-template-columns: 1fr; }
+      .stack-grid { grid-template-columns: 1fr; gap: 24px; }
+      .project-card { grid-template-columns: 1fr; }
+      .project-visual { border-left: none; border-top: 1px solid var(--border); }
+      .nav-links { display: none; }
+      section { padding: 80px 0; }
+      .hero { padding: 120px 0 80px; }
+    }
+
+    /* Scroll animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
-<body class="tail-container bg-zinc-950 text-zinc-200">
-    <!-- NAVBAR -->
-    <nav class="fixed top-0 left-0 right-0 z-50 border-b border-zinc-800 bg-zinc-950/80 backdrop-blur-md">
-        <div class="max-w-screen-2xl mx-auto px-8 py-5 flex items-center justify-between">
-            <div class="flex items-center gap-x-3">
-                <div class="w-8 h-8 rounded-2xl bg-cyan-400 flex items-center justify-center text-zinc-950 font-bold text-xl leading-none pt-0.5">P</div>
-                <div>
-                    <span class="heading-font text-2xl font-semibold tracking-tighter text-white">PaaAS</span>
-                </div>
-            </div>
-            
-            <div class="hidden md:flex items-center gap-x-10 text-sm font-medium">
-                <a href="#features" class="nav-link text-zinc-400 hover:text-white">Features</a>
-                <a href="#pricing" class="nav-link text-zinc-400 hover:text-white">Pricing</a>
-                <a href="#architecture" class="nav-link text-zinc-400 hover:text-white">Architecture</a>
-                <a href="#for-you" class="nav-link text-zinc-400 hover:text-white">For You</a>
-            </div>
-            
-            <div class="flex items-center gap-x-4">
-                <a href="#waitlist" 
-                   class="px-6 py-2.5 text-sm font-semibold rounded-3xl border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-zinc-950 transition-all">
-                    Join Waitlist
-                </a>
-                <button onclick="toggleMobileMenu()" 
-                        class="md:hidden w-10 h-10 flex items-center justify-center text-2xl">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
-            </div>
-        </div>
-        
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden fixed inset-0 bg-zinc-950 z-50 pt-20 px-8">
-            <div class="flex flex-col gap-y-6 text-lg">
-                <a href="#features" onclick="toggleMobileMenu()" class="nav-link">Features</a>
-                <a href="#pricing" onclick="toggleMobileMenu()" class="nav-link">Pricing</a>
-                <a href="#architecture" onclick="toggleMobileMenu()" class="nav-link">Architecture</a>
-                <a href="#for-you" onclick="toggleMobileMenu()" class="nav-link">For You</a>
-                <a href="#waitlist" onclick="toggleMobileMenu()" 
-                   class="inline-block px-8 py-4 bg-cyan-400 text-zinc-950 font-semibold rounded-3xl text-center mt-6">
-                    Join the Private Waitlist
-                </a>
-            </div>
-        </div>
-    </nav>
+<body>
 
-    <!-- HERO -->
-    <header class="hero-bg min-h-screen flex items-center pt-20">
-        <div class="max-w-screen-2xl mx-auto px-8 grid md:grid-cols-12 gap-16 items-center">
-            <div class="md:col-span-7">
-                <div class="inline-flex items-center gap-x-2 bg-zinc-900 border border-zinc-700 rounded-3xl px-5 py-1.5 text-xs tracking-[0.125em] font-mono mb-6">
-                    <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-                    EARLY MVP • 2026
-                </div>
-                
-                <h1 class="heading-font text-7xl md:text-8xl font-semibold tracking-tighter leading-none text-white mb-6">
-                    Your own<br>dedicated<br>AI teammate.
-                </h1>
-                
-                <p class="max-w-lg text-2xl text-zinc-400 leading-tight mb-10">
-                    Private. Persistent. Powerful.<br>
-                    Managed Hermes or OpenClaw agents with RTX 6000 inference, long-term memory, and optional web hosting.
-                </p>
-                
-                <div class="flex flex-wrap gap-4">
-                    <a href="#waitlist" 
-                       class="inline-flex items-center justify-center px-10 py-4 bg-white text-zinc-900 rounded-3xl font-semibold text-lg hover:scale-105 transition-transform">
-                        Join Private Waitlist
-                    </a>
-                    <a href="#architecture" 
-                       class="inline-flex items-center justify-center px-8 py-4 border border-zinc-400 rounded-3xl font-medium text-lg hover:bg-white/5 transition-all">
-                        See the stack →
-                    </a>
-                </div>
-                
-                <div class="mt-16 flex items-center gap-x-8 text-sm">
-                    <div class="flex items-center gap-x-5">
-                        <div class="flex -space-x-4">
-                            <div class="w-7 h-7 bg-zinc-700 border-2 border-zinc-900 rounded-2xl flex items-center justify-center text-[10px]">H</div>
-                            <div class="w-7 h-7 bg-cyan-500 border-2 border-zinc-900 rounded-2xl flex items-center justify-center text-[10px]">O</div>
-                        </div>
-                        <div class="text-zinc-500">Hermes + OpenClaw</div>
-                    </div>
-                    <div class="h-5 w-px bg-zinc-700"></div>
-                    <div class="text-emerald-400 font-medium">Privacy-first • No external APIs</div>
-                </div>
-            </div>
-            
-            <div class="md:col-span-5 relative">
-                <div class="glass border border-zinc-700/50 rounded-3xl p-2 shadow-2xl">
-                    <div class="bg-zinc-900 rounded-3xl p-8">
-                        <div class="flex justify-between items-start mb-8">
-                            <div>
-                                <div class="text-cyan-400 text-sm font-mono tracking-widest">LIVE AGENT</div>
-                                <div class="text-3xl heading-font text-white mt-1">sirius-assistant</div>
-                            </div>
-                            <div class="px-4 py-1 bg-emerald-950 text-emerald-400 text-xs rounded-3xl font-medium flex items-center gap-x-2">
-                                <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
-                                ONLINE
-                            </div>
-                        </div>
-                        
-                        <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-6 font-mono text-sm leading-relaxed text-zinc-400 h-80 overflow-hidden">
-                            <div class="text-emerald-300">&gt; Planning next VLM training run...</div>
-                            <div class="mt-6 text-amber-300">Persistent memory retrieved: Previous experiments with Qwen3.6 showed 18% better ablation on Heretic benchmarks.</div>
-                            <div class="mt-8 text-cyan-300">Spinning up RTX 6000 inference node (spot fallback ready).</div>
-                            <div class="mt-12 text-zinc-500 text-xs">postgres://paas-memory • 14.2k vectors indexed</div>
-                        </div>
-                        
-                        <div class="mt-6 flex gap-3">
-                            <div class="flex-1 h-2 bg-cyan-400 rounded"></div>
-                            <div class="flex-1 h-2 bg-zinc-700 rounded"></div>
-                            <div class="flex-1 h-2 bg-zinc-700 rounded"></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- floating badge -->
-                <div class="absolute -bottom-4 -left-6 glass border border-cyan-400/30 text-cyan-400 text-xs px-5 py-3 rounded-3xl flex items-center gap-x-3 shadow-xl">
-                    <i class="fa-solid fa-shield-halved"></i>
-                    <span class="font-medium">Zero external LLM calls</span>
-                </div>
-            </div>
-        </div>
-        
-        <div class="absolute bottom-12 left-1/2 flex flex-col items-center text-xs tracking-widest text-zinc-500">
-            <div class="mb-2">SCROLL FOR DETAILS</div>
-            <i class="fa-solid fa-chevron-down animate-bounce"></i>
-        </div>
-    </header>
+  <!-- Navigation -->
+  <nav>
+    <div class="container">
+      <a href="#" class="logo">
+        <span class="logo-icon">S</span>
+        sirius devops
+      </a>
+      <ul class="nav-links">
+        <li><a href="#capabilities">Capabilities</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#stack">Stack</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="https://github.com/sirius0xdev/gcloud-lab" target="_blank" class="github-link">⬡ GitHub</a></li>
+      </ul>
+    </div>
+  </nav>
 
-    <!-- WHAT IS PAAAS -->
-    <section class="max-w-screen-2xl mx-auto px-8 py-28 border-t border-zinc-800">
-        <div class="grid md:grid-cols-12 gap-20 items-center">
-            <div class="md:col-span-5">
-                <div class="sticky top-28">
-                    <div class="uppercase text-cyan-400 text-sm font-medium tracking-[1px]">PaaAS — Personal Assistant as a Service</div>
-                    <h2 class="heading-font text-6xl font-semibold tracking-tighter text-white mt-3 leading-none">
-                        A lean micro-SaaS for serious AI builders.
-                    </h2>
-                    <p class="mt-8 text-zinc-400 text-lg max-w-md">
-                        Private dedicated agents with persistent memory and high-performance local inference. 
-                        Built to cover GPU lab costs while the founder continues frontier VLM and agent research.
-                    </p>
-                    <div class="mt-10 text-xs uppercase flex items-center gap-x-8 text-zinc-500">
-                        <div>6–12 customers max</div>
-                        <div class="flex-1 h-px bg-zinc-800"></div>
-                        <div>North Carolina • 2026</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="md:col-span-7 text-zinc-400 leading-relaxed text-[21px]">
-                <p class="mb-8">
-                    This is not another generic AI wrapper. PaaAS gives you a fully managed private workspace that feels like having your own AI developer and DevOps engineer on retainer.
-                </p>
-                <p>
-                    Persistent PostgreSQL memory. RTX 6000 Ada inference that spins up on demand. Optional one-click web hosting for your agent's dashboards and tools. 
-                    All inference stays private — no OpenAI, no Anthropic, no data leakage.
-                </p>
-                
-                <div class="mt-16 p-8 border-l-2 border-cyan-400 bg-zinc-900/50">
-                    <div class="italic text-lg">"Your own dedicated AI teammate — managed for you."</div>
-                    <div class="text-xs text-zinc-500 mt-6">— Core positioning</div>
-                </div>
-            </div>
-        </div>
-    </section>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        Infrastructure Engineer
+      </div>
+      <h1>
+        Ship resilient cloud<br>
+        infrastructure, <span class="accent">not just code.</span>
+      </h1>
+      <p class="hero-subtitle">
+        I design and operate cloud-native platforms on Google Cloud — multi-cluster Kubernetes,
+        GitOps pipelines, GPU-inference orchestration, and autonomous data systems that run
+        themselves.
+      </p>
+      <div class="hero-actions">
+        <a href="https://github.com/sirius0xdev/gcloud-lab" target="_blank" class="btn-primary">
+          ⬡ View on GitHub
+        </a>
+        <a href="#projects" class="btn-secondary">
+          See what I build →
+        </a>
+      </div>
 
-    <!-- FEATURES -->
-    <section id="features" class="bg-zinc-900 py-28">
-        <div class="max-w-screen-2xl mx-auto px-8">
-            <div class="flex justify-between items-end mb-16">
-                <div>
-                    <span class="px-5 py-2 bg-zinc-800 text-cyan-300 text-sm rounded-3xl">CORE OFFERING</span>
-                    <h2 class="heading-font text-6xl font-semibold tracking-tighter text-white mt-4">Everything you need.<br>Nothing you don't.</h2>
-                </div>
-                <a href="#pricing" class="hidden md:flex items-center gap-x-3 group">
-                    <span class="text-sm uppercase tracking-widest group-hover:text-cyan-400">See pricing</span>
-                    <div class="w-9 h-px bg-zinc-700 group-hover:bg-cyan-400"></div>
-                </a>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Card 1 -->
-                <div class="feature-card bg-zinc-950 border border-zinc-800 rounded-3xl p-10">
-                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-400 to-sky-500 flex items-center justify-center text-3xl mb-8">🧠</div>
-                    <h3 class="text-3xl font-semibold text-white mb-4">Managed Persistent Agent</h3>
-                    <p class="text-zinc-400">Hermes or OpenClaw (your choice). Strong reasoning, autonomous tool use, and true long-term memory via PostgreSQL + RAG.</p>
-                    <ul class="mt-10 space-y-4 text-sm">
-                        <li class="flex items-start gap-x-3"><span class="text-cyan-400 mt-1">•</span> Conversation history that actually persists</li>
-                        <li class="flex items-start gap-x-3"><span class="text-cyan-400 mt-1">•</span> Personal knowledge base support</li>
-                        <li class="flex items-start gap-x-3"><span class="text-cyan-400 mt-1">•</span> Tool calling that improves over time</li>
-                    </ul>
-                </div>
-                
-                <!-- Card 2 -->
-                <div class="feature-card bg-zinc-950 border border-zinc-800 rounded-3xl p-10">
-                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-400 to-fuchsia-500 flex items-center justify-center text-3xl mb-8">⚡</div>
-                    <h3 class="text-3xl font-semibold text-white mb-4">High-End Private Inference</h3>
-                    <p class="text-zinc-400">Dedicated access to RTX 6000 Pro (Ada) GPUs. Fast local multimodal and VLM workloads. Spot + on-demand with graceful preemption handling.</p>
-                    <div class="mt-12 text-xs font-mono bg-black/60 p-5 rounded-2xl border border-zinc-800">
-                        g4-standard-48 nodepool<br>
-                        <span class="text-emerald-400">96GB GDDR7 • Spot primary</span>
-                    </div>
-                </div>
-                
-                <!-- Card 3 -->
-                <div class="feature-card bg-zinc-950 border border-zinc-800 rounded-3xl p-10">
-                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-3xl mb-8">🌐</div>
-                    <h3 class="text-3xl font-semibold text-white mb-4">One-Click Web Hosting</h3>
-                    <p class="text-zinc-400">Deploy agent frontends, internal dashboards, tools, and simple UIs instantly. Runs on the same control plane as your agent.</p>
-                    <div class="mt-16 pt-8 border-t border-zinc-800 text-xs flex items-center justify-between">
-                        <div class="font-medium">Cilium Cluster Mesh</div>
-                        <div class="text-emerald-400">• LIVE •</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="mt-16 text-center text-zinc-500 text-sm max-w-md mx-auto">
-                Fair use policy with practically unlimited tokens for reasonable workloads. Heavy 24/7 usage encouraged to upgrade to the Heavy tier.
-            </div>
+      <!-- Terminal -->
+      <div class="terminal">
+        <div class="terminal-header">
+          <span class="terminal-dot red"></span>
+          <span class="terminal-dot yellow"></span>
+          <span class="terminal-dot green"></span>
+          <span class="terminal-title">~/gcloud-lab — bash</span>
         </div>
-    </section>
+        <div class="terminal-body">
+          <div><span class="prompt">→ </span><span class="cmd">kubectl get nodes</span></div>
+          <div class="output">NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;STATUS&nbsp;&nbsp;ROLES&nbsp;&nbsp;&nbsp;AGE&nbsp;&nbsp;VERSION</div>
+          <div class="success">gke-cluster-pool-1&nbsp;Ready&nbsp;&nbsp;master&nbsp;&nbsp;45d&nbsp;v1.32.4</div>
+          <div class="success">gke-cluster-gpu-l4&nbsp;&nbsp;Ready&nbsp;&nbsp;gpu&nbsp;&nbsp;&nbsp;&nbsp;32d&nbsp;v1.32.4</div>
+          <div class="success">gke-cluster-a100-0&nbsp;&nbsp;Ready&nbsp;&nbsp;gpu&nbsp;&nbsp;&nbsp;&nbsp;12d&nbsp;v1.32.4</div>
+          <br>
+          <div><span class="prompt">→ </span><span class="cmd">flux get reconcile</span></div>
+          <div class="output">&nbsp;&nbsp;INFRA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;STATUS</div>
+          <div class="success">cnpg-operator&nbsp;&nbsp;&nbsp;&nbsp;Succeeded&nbsp;&nbsp;15s ago</div>
+          <div class="success">keda&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Succeeded&nbsp;&nbsp;15s ago</div>
+          <div class="success">openclaw-brain&nbsp;&nbsp;&nbsp;Succeeded&nbsp;&nbsp;15s ago</div>
+          <br>
+          <div><span class="prompt">→ </span><span class="cursor"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- PRICING -->
-    <section id="pricing" class="max-w-screen-2xl mx-auto px-8 py-28">
-        <div class="text-center mb-16">
-            <span class="text-xs tracking-[2px] font-mono bg-zinc-900 px-6 py-3 rounded-3xl">PRICING TIERS</span>
-            <h2 class="heading-font text-6xl font-semibold tracking-tighter mt-6">Simple. Transparent.<br>Built to cover the lab.</h2>
+  <!-- Stats -->
+  <section class="stats" style="padding: 48px 0;">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat">
+          <div class="stat-value">3</div>
+          <div class="stat-label">GPU Node Pools (Spot)</div>
         </div>
-        
-        <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <!-- Standard -->
-            <div class="border border-zinc-700 rounded-3xl p-10 bg-zinc-950">
-                <div class="flex justify-between">
-                    <div>
-                        <div class="text-emerald-400 font-semibold">STANDARD</div>
-                        <div class="text-7xl heading-font font-semibold text-white mt-2">$100</div>
-                        <div class="text-zinc-400">per month</div>
-                    </div>
-                    <div class="text-right">
-                        <div class="px-6 py-2 bg-zinc-900 rounded-3xl text-sm inline-block">Light experimentation</div>
-                    </div>
-                </div>
-                
-                <ul class="my-12 space-y-6">
-                    <li class="flex gap-x-4"><i class="fa-solid fa-check text-emerald-400 mt-1"></i> Managed Hermes/OpenClaw agent</li>
-                    <li class="flex gap-x-4"><i class="fa-solid fa-check text-emerald-400 mt-1"></i> Persistent Postgres memory + RAG</li>
-                    <li class="flex gap-x-4"><i class="fa-solid fa-check text-emerald-400 mt-1"></i> Basic web hosting</li>
-                    <li class="flex gap-x-4"><i class="fa-solid fa-check text-emerald-400 mt-1"></i> Standard GPU priority</li>
-                </ul>
-                
-                <button onclick="joinWaitlist('Standard')" 
-                        class="w-full py-6 bg-white text-zinc-900 rounded-3xl font-semibold text-lg hover:bg-amber-300">
-                    Start with Standard
-                </button>
-                <div class="text-center text-xs text-zinc-500 mt-6">Low–Medium GPU contribution</div>
-            </div>
-            
-            <!-- Heavy -->
-            <div class="border-2 border-cyan-400 rounded-3xl p-10 bg-zinc-950 relative">
-                <div class="absolute -top-4 right-8 bg-cyan-400 text-zinc-950 text-xs font-bold px-8 py-1 rounded-3xl">RECOMMENDED</div>
-                
-                <div class="flex justify-between">
-                    <div>
-                        <div class="text-cyan-400 font-semibold">HEAVY / 24-7</div>
-                        <div class="text-7xl heading-font font-semibold text-white mt-2">$200</div>
-                        <div class="text-zinc-400">per month</div>
-                    </div>
-                    <div class="text-right">
-                        <div class="px-6 py-2 bg-cyan-950 text-cyan-400 rounded-3xl text-sm inline-block">Power users &amp; builders</div>
-                    </div>
-                </div>
-                
-                <ul class="my-12 space-y-6">
-                    <li class="flex gap-x-4"><i class="fa-solid fa-check text-cyan-400 mt-1"></i> Everything in Standard</li>
-                    <li class="flex gap-x-4"><i class="fa-solid fa-check text-cyan-400 mt-1"></i> Priority GPU access</li>
-                    <li class="flex gap-x-4"><i class="fa-solid fa-check text-cyan-400 mt-1"></i> Higher resource allocation</li>
-                    <li class="flex gap-x-4"><i class="fa-solid fa-check text-cyan-400 mt-1"></i> Optimized for always-on workflows</li>
-                </ul>
-                
-                <button onclick="joinWaitlist('Heavy')" 
-                        class="w-full py-6 bg-cyan-400 text-zinc-950 rounded-3xl font-semibold text-lg hover:bg-cyan-300">
-                    Go Heavy — Recommended
-                </button>
-                <div class="text-center text-xs text-cyan-400 mt-6">Designed to meaningfully offset dedicated GPU usage</div>
-            </div>
+        <div class="stat">
+          <div class="stat-value">371</div>
+          <div class="stat-label">Feeds Scraped / Cycle</div>
         </div>
-        
-        <div class="max-w-md mx-auto text-center mt-12 text-zinc-400 text-sm">
-            Average revenue per user ~$150. Break-even at 6–8 customers. Target cohort of 8–12 to comfortably fund research.
+        <div class="stat">
+          <div class="stat-value">90%</div>
+          <div class="stat-label">GPU Cost Reduction</div>
         </div>
-    </section>
+        <div class="stat">
+          <div class="stat-value">24/7</div>
+          <div class="stat-label">Platform Uptime</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- ARCHITECTURE -->
-    <section id="architecture" class="bg-black py-28">
-        <div class="max-w-screen-2xl mx-auto px-8">
-            <div class="grid md:grid-cols-12 gap-x-20">
-                <div class="md:col-span-5">
-                    <h2 class="heading-font text-6xl font-semibold tracking-tighter text-white">Battle-tested<br>infrastructure.</h2>
-                    <p class="mt-8 text-zinc-400 max-w-xs">
-                        Lightweight GKE control plane. Spot RTX 6000 GPUs with on-demand fallback. Cilium mesh. Built for reliability and cost efficiency.
-                    </p>
-                    
-                    <div class="mt-20">
-                        <div class="text-xs uppercase text-zinc-500 mb-6">Google Cloud Cost (per node)</div>
-                        <div class="space-y-6 text-sm">
-                            <div class="flex justify-between border-b border-zinc-800 pb-4">
-                                <div class="text-zinc-400">Spot</div>
-                                <div class="font-medium text-emerald-400">~$650 / month</div>
-                            </div>
-                            <div class="flex justify-between border-b border-zinc-800 pb-4">
-                                <div class="text-zinc-400">1yr CUD</div>
-                                <div>$2,240 / month</div>
-                            </div>
-                            <div class="flex justify-between">
-                                <div class="text-zinc-400">Realistic monthly op-ex</div>
-                                <div class="font-medium">$800 – $2,200</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="md:col-span-7 mt-16 md:mt-0">
-                    <div class="glass border border-zinc-700 rounded-3xl p-10">
-                        <div class="font-mono text-[10px] text-zinc-500 mb-8 flex items-center gap-x-8">
-                            <div>CONTROL PLANE</div>
-                            <div class="flex-1 h-px bg-gradient-to-r from-transparent via-zinc-700 to-transparent"></div>
-                            <div>GPU INFERENCE</div>
-                        </div>
-                        
-                        <div class="relative h-80 flex items-center justify-center">
-                            <!-- Simple architecture SVG -->
-                            <svg width="620" height="280" viewBox="0 0 620 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Control plane -->
-                                <rect x="40" y="60" width="200" height="160" rx="16" fill="#18181b" stroke="#22d3ee" stroke-width="3"/>
-                                <text x="80" y="105" fill="#a5f3fc" font-size="13" font-family="monospace">GKE Control Plane</text>
-                                <text x="65" y="130" fill="#64748b" font-size="11">Agents • Postgres • Web Hosting</text>
-                                <text x="65" y="148" fill="#64748b" font-size="11">Cilium ClusterMesh</text>
-                                
-                                <!-- GPU Pool -->
-                                <rect x="380" y="40" width="200" height="200" rx="24" fill="#18181b" stroke="#67e8f9" stroke-width="3" stroke-dasharray="6 4"/>
-                                <text x="430" y="85" fill="#67e8f9" font-size="14" font-family="monospace" font-weight="600">RTX 6000 Pro</text>
-                                <text x="415" y="110" fill="#a1a1aa" font-size="12">Spot + On-Demand Fallback</text>
-                                <circle cx="470" cy="165" r="28" fill="#22d3ee" fill-opacity="0.1"/>
-                                <text x="455" y="172" fill="#22d3ee" font-size="22">GPU</text>
-                                
-                                <!-- Connection lines -->
-                                <path d="M 245 130 Q 310 130 375 105" stroke="#67e8f9" stroke-width="3" fill="none" stroke-dasharray="2 2"/>
-                                <path d="M 245 165 Q 310 165 375 195" stroke="#67e8f9" stroke-width="2" fill="none"/>
-                                
-                                <!-- Labels -->
-                                <text x="290" y="115" fill="#a5f3fc" font-size="10" font-family="monospace">ON DEMAND</text>
-                                <text x="295" y="185" fill="#67e8f9" font-size="10" font-family="monospace">SPOT</text>
-                            </svg>
-                        </div>
-                    </div>
-                    
-                    <div class="text-[10px] text-center text-zinc-500 mt-6 font-mono">
-                        Graceful preemption handling • Auto-scale inference • Persistent state across restarts
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+  <!-- Capabilities -->
+  <section id="capabilities">
+    <div class="container">
+      <div class="section-label">Capabilities</div>
+      <h2 class="section-title">End-to-end platform engineering.</h2>
+      <p class="section-desc">
+        From bare-metal GKE provisioning to self-healing application platforms —
+        everything version-controlled, reproducible, and observable.
+      </p>
 
-    <!-- TARGET CUSTOMERS -->
-    <section id="for-you" class="max-w-screen-2xl mx-auto px-8 py-28 bg-zinc-950">
-        <div class="max-w-2xl mx-auto text-center">
-            <span class="text-xs font-medium px-5 py-2 rounded-3xl border border-amber-300 text-amber-300">WHO THIS IS FOR</span>
-            <h2 class="heading-font text-6xl font-semibold tracking-tighter text-white mt-8">Indie hackers, researchers,<br>and power users who want more.</h2>
-            <p class="mt-10 text-zinc-400 text-xl">Not competing on price. Competing on quality, privacy, persistence, and zero-ops experience.</p>
+      <div class="capabilities-grid">
+        <div class="capability-card reveal">
+          <div class="capability-icon cyan">⬡</div>
+          <h3>Infrastructure as Code</h3>
+          <p>Terraform modules for GKE, VPC networking, GPU node pools, and secrets encryption with SOPS + Age. Every resource version-controlled.</p>
+          <div class="capability-tags">
+            <span class="tag">Terraform</span>
+            <span class="tag">GCP</span>
+            <span class="tag">SOPS</span>
+            <span class="tag">Age</span>
+          </div>
         </div>
-        
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20 max-w-5xl mx-auto">
-            <div class="text-center p-8">
-                <div class="text-4xl mb-6">🛠️</div>
-                <div class="font-semibold text-white">Indie hackers &amp; AI builders</div>
-                <div class="text-xs text-zinc-500 mt-3">Iterating fast on agents and tools</div>
-            </div>
-            <div class="text-center p-8">
-                <div class="text-4xl mb-6">🔬</div>
-                <div class="font-semibold text-white">VLM &amp; agent researchers</div>
-                <div class="text-xs text-zinc-500 mt-3">Need private multimodal inference</div>
-            </div>
-            <div class="text-center p-8">
-                <div class="text-4xl mb-6">🔐</div>
-                <div class="font-semibold text-white">Privacy-conscious power users</div>
-                <div class="text-xs text-zinc-500 mt-3">Tired of shared instances and data leaks</div>
-            </div>
-            <div class="text-center p-8">
-                <div class="text-4xl mb-6">🏢</div>
-                <div class="font-semibold text-white">Small secure teams</div>
-                <div class="text-xs text-zinc-500 mt-3">Internal AI workspace without the ops burden</div>
-            </div>
-        </div>
-    </section>
 
-    <!-- FOUNDER -->
-    <section class="border-t border-b border-zinc-800 py-20">
-        <div class="max-w-screen-2xl mx-auto px-8">
-            <div class="flex flex-col md:flex-row gap-16 items-center">
-                <div class="flex-1">
-                    <div class="uppercase text-xs tracking-widest text-zinc-400">FOUNDER</div>
-                    <div class="text-5xl heading-font font-medium text-white mt-3">Lance (@sirius_devops)</div>
-                    <div class="text-zinc-400 mt-2">DevOps &amp; AI builder based in North Carolina</div>
-                    
-                    <div class="max-w-xs mt-10 text-zinc-400">
-                        This project is a passion-driven side project launched in 2026. Revenue directly funds continued research into advanced Vision-Language Models and autonomous agent systems.
-                    </div>
-                </div>
-                
-                <div class="flex-1 text-sm max-w-lg text-zinc-400 border-l border-zinc-700 pl-12">
-                    <p class="mb-6">"This is not about building a unicorn. It's about creating sustainable value for a small group of users while funding continued exploration at the frontier of agentic AI and VLMs."</p>
-                    <p class="text-cyan-300">— Lance</p>
-                </div>
-            </div>
+        <div class="capability-card reveal">
+          <div class="capability-icon green">◈</div>
+          <h3>GitOps & CI/CD</h3>
+          <p>Flux CD bootstrapped via Terraform, Kustomize overlays for env promotion, GitHub Actions for container builds. Zero manual deploys.</p>
+          <div class="capability-tags">
+            <span class="tag">Flux CD</span>
+            <span class="tag">Kustomize</span>
+            <span class="tag">Helm</span>
+            <span class="tag">GHCR</span>
+          </div>
         </div>
-    </section>
 
-    <!-- WAITLIST / FINAL CTA -->
-    <section id="waitlist" class="bg-zinc-950 py-32">
-        <div class="max-w-2xl mx-auto px-6 text-center">
-            <div class="inline px-6 py-2 text-xs bg-white/5 text-cyan-400 rounded-3xl">LIMITED TO 6–12 CURATED USERS</div>
-            
-            <h2 class="heading-font text-6xl font-semibold text-white mt-8 tracking-tighter">Ready to have your own private AI teammate?</h2>
-            <p class="mt-6 text-xl text-zinc-400">The private waitlist is now open for the first pilot cohort.</p>
-            
-            <div class="mt-16 max-w-xs mx-auto">
-                <input id="email-input" type="email" placeholder="your@email.com" 
-                       class="w-full bg-zinc-900 border border-zinc-700 focus:border-cyan-400 rounded-3xl px-8 py-7 text-lg outline-none placeholder:text-zinc-500">
-                <button onclick="submitWaitlist()" 
-                        class="mt-4 w-full bg-white hover:bg-amber-200 transition-colors text-zinc-950 py-7 rounded-3xl font-semibold text-xl">
-                    Reserve My Spot
-                </button>
-            </div>
-            
-            <div id="waitlist-message" class="hidden mt-8 text-emerald-400 text-sm font-medium"></div>
-            
-            <div class="text-xs text-zinc-500 mt-16">
-                Next steps include finalizing node pools, building the onboarding dashboard, and launching with the first 3–5 pilot users.
-            </div>
+        <div class="capability-card reveal">
+          <div class="capability-icon purple">△</div>
+          <h3>Kubernetes at Scale</h3>
+          <p>Multi-node-pool clusters with custom CNI (Cilium), Gateway API routing, pod security, network policies, and autoscaling to zero.</p>
+          <div class="capability-tags">
+            <span class="tag">GKE</span>
+            <span class="tag">Cilium</span>
+            <span class="tag">Gateway API</span>
+            <span class="tag">KEDA</span>
+          </div>
         </div>
-    </section>
 
-    <!-- FOOTER -->
-    <footer class="bg-black py-20 border-t border-zinc-900">
-        <div class="max-w-screen-2xl mx-auto px-8 text-xs text-zinc-500 flex flex-col md:flex-row justify-between items-center gap-y-6">
-            <div>© 2026 PaaAS • A passion project by Lance (@sirius_devops)</div>
-            <div class="flex gap-x-8">
-                <a href="#" class="hover:text-zinc-300">Privacy</a>
-                <a href="#" class="hover:text-zinc-300">Fair Use</a>
-                <a href="https://github.com/sirius0xdev" class="hover:text-zinc-300">GitHub</a>
-            </div>
-            <div class="text-center md:text-right">
-                Not a unicorn.<br>
-                <span class="text-emerald-300">Sustainable infrastructure for frontier research.</span>
-            </div>
+        <div class="capability-card reveal">
+          <div class="capability-icon orange">⚡</div>
+          <h3>GPU Inference Orchestration</h3>
+          <p>Dual-tier vLLM platforms on spot GPU instances — L4 dispatchers running 24/7, A100/Pro6000 thinkers scaling via KEDA. fp8 KV cache, chunked prefill.</p>
+          <div class="capability-tags">
+            <span class="tag">vLLM</span>
+            <span class="tag">NVIDIA L4</span>
+            <span class="tag">A100</span>
+            <span class="tag">RTX Pro 6000</span>
+          </div>
         </div>
-    </footer>
 
-    <script>
-        function initializeTailwind() {
-            tailwind.config = {
-                content: [],
-                theme: {
-                    extend: {}
-                }
-            }
+        <div class="capability-card reveal">
+          <div class="capability-icon cyan">◉</div>
+          <h3>Observability</h3>
+          <p>Prometheus + Grafana for metrics, Cilium Hubble for network tracing, k9s for interactive cluster management. Monitoring that doesn't leak publicly.</p>
+          <div class="capability-tags">
+            <span class="tag">Prometheus</span>
+            <span class="tag">Grafana</span>
+            <span class="tag">Hubble</span>
+            <span class="tag">k9s</span>
+          </div>
+        </div>
+
+        <div class="capability-card reveal">
+          <div class="capability-icon green">◆</div>
+          <h3>Autonomous Systems</h3>
+          <p>Self-running pipelines — news scraping, LLM-powered analysis, futures trading signals, workflow automation. CronJobs, no human in the loop.</p>
+          <div class="capability-tags">
+            <span class="tag">Python</span>
+            <span class="tag">Scrapy</span>
+            <span class="tag">N8N</span>
+            <span class="tag">CronJob</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-label">Featured Work</div>
+      <h2 class="section-title">Systems that run themselves.</h2>
+      <p class="section-desc">
+        Each project demonstrates a different facet of platform engineering —
+        from GPU-orchestrated inference to autonomous market intelligence.
+      </p>
+
+      <div class="projects-grid">
+        <!-- PAaaS - Full width -->
+        <div class="project-card reveal">
+          <div class="project-content">
+            <div class="project-type">AI Infrastructure</div>
+            <h3>OpenClaw PAaaS — Dual-Tier LLM Platform</h3>
+            <p>
+              Privacy-first AI assistant platform with a two-tier cognitive architecture.
+              Tier 1 dispatches on always-on L4 GPUs. Tier 2 scales A100/Pro6000 thinkers
+              from zero via KEDA — massive context windows for deep reasoning, zero cost
+              when idle.
+            </p>
+            <ul class="project-features">
+              <li>vLLM serving Qwen2.5-Coder-7B (L4) → Qwen3.5-27B (Pro6000)</li>
+              <li>KEDA autoscaling from 0 with spot instance orchestration</li>
+              <li>fp8 KV cache + chunked prefill for massive multi-file context</li>
+              <li>Multi-tenant: isolated deployments per customer namespace</li>
+              <li>Outbound polling to Telegram / Discord — no public ingress</li>
+            </ul>
+          </div>
+          <div class="project-visual">
+            <span class="key">cluster</span>: devops-lab-cluster<br>
+            <span class="key">region</span>: <span class="str">us-central1-a</span><br>
+            <span class="key">nodePools</span>:<br>
+            &nbsp;&nbsp;- <span class="key">name</span>: <span class="str">standard</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="key">type</span>: <span class="str">e2-standard-2</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="key">scale</span>: 1–16<br>
+            &nbsp;&nbsp;- <span class="key">name</span>: <span class="str">gpu-l4</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="key">type</span>: <span class="str">g2-standard-8</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="key">spot</span>: <span class="hl">true</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="key">scale</span>: 0–5<br>
+            &nbsp;&nbsp;- <span class="key">name</span>: <span class="str">a100</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="key">type</span>: <span class="str">a2-highgpu-1g</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="key">spot</span>: <span class="hl">true</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="key">scale</span>: 0–1<br>
+            <br>
+            <span class="key">gitOps</span>:<br>
+            &nbsp;&nbsp;<span class="key">engine</span>: <span class="str">Flux CD 1.7.6</span><br>
+            &nbsp;&nbsp;<span class="key">interval</span>: <span class="str">1m</span><br>
+            &nbsp;&nbsp;<span class="key">paths</span>: [infra, apps]
+          </div>
+        </div>
+
+        <!-- News Bot -->
+        <div class="project-card reveal">
+          <div class="project-content">
+            <div class="project-type">Autonomous Data Pipeline</div>
+            <h3>News Quant Pipeline</h3>
+            <p>
+              Scrape 371 global financial feeds, run through DeepSeek-R1 analysis
+              with a strict reasoning protocol, generate futures trading signals with
+              explicit entry/exit levels. All inference runs locally — no API calls,
+              no throttling during market panics.
+            </p>
+            <ul class="project-features">
+              <li>371 feeds across global markets</li>
+              <li>DeepSeek-R1 with 10-step reasoning chain</li>
+              <li>Futures targets: /ES, /CL, /NQ with R:R levels</li>
+              <li>End-to-end VPC-private — zero external data exposure</li>
+            </ul>
+          </div>
+          <div class="project-visual">
+            <span class="key">pipeline</span>: <span class="str">news_bot</span><br>
+            <span class="key">schedule</span>: <span class="str">every 10 min</span><br>
+            <br>
+            <span class="key">stages</span>:<br>
+            &nbsp;&nbsp;1. <span class="hl">scraper</span> @ :50<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;→ 371 feeds pulled<br>
+            &nbsp;&nbsp;2. <span class="hl">analyst</span> @ :55<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;→ DeepSeek-R1 analysis<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;→ 10-step reasoning<br>
+            &nbsp;&nbsp;3. <span class="hl">telebot</span> @ :58<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;→ Telegram delivery<br>
+            <br>
+            <span class="key">privacy</span>: <span class="hl">VPC-only</span><br>
+            <span class="key">models</span>: <span class="str">local</span> (no API calls)
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Architecture Diagram -->
+  <section>
+    <div class="container">
+      <div class="section-label">Architecture</div>
+      <h2 class="section-title">GitOps on GCP.</h2>
+      <p class="section-desc">
+        Everything declarative, version-controlled, and continuously reconciled.
+        From Terraform provisioning to Flux applying manifests — no manual cluster access needed.
+      </p>
+
+      <div class="arch-container">
+        <svg viewBox="0 0 760 480" xmlns="http://www.w3.org/2000/svg">
+          <!-- GitHub -->
+          <rect x="300" y="20" width="160" height="56" rx="8" fill="#111114" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+          <text x="380" y="44" text-anchor="middle" fill="#71717a" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="500">GitHub</text>
+          <text x="380" y="62" text-anchor="middle" fill="#a1a1aa" font-family="'JetBrains Mono',monospace" font-size="10">gcloud-lab</text>
+
+          <!-- Arrow down -->
+          <line x1="380" y1="76" x2="380" y2="110" stroke="#22d3ee" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <polygon points="376,108 380,116 384,108" fill="#22d3ee"/>
+
+          <!-- Terraform -->
+          <rect x="300" y="110" width="160" height="48" rx="8" fill="#111114" stroke="rgba(34,211,238,0.3)" stroke-width="1"/>
+          <text x="380" y="130" text-anchor="middle" fill="#22d3ee" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="500">Terraform</text>
+          <text x="380" y="146" text-anchor="middle" fill="#71717a" font-family="'JetBrains Mono',monospace" font-size="10">Provision GKE + Flux Bootstrap</text>
+
+          <!-- Arrow down -->
+          <line x1="380" y1="158" x2="380" y2="186" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+
+          <!-- GKE Cluster (big box) -->
+          <rect x="80" y="186" width="600" height="280" rx="12" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="6 4"/>
+          <text x="106" y="210" fill="#71717a" font-family="'JetBrains Mono',monospace" font-size="10">devops-lab-cluster · us-central1-a · Cilium CNI</text>
+
+          <!-- Flux -->
+          <rect x="120" y="226" width="130" height="44" rx="6" fill="rgba(34,211,238,0.08)" stroke="rgba(34,211,238,0.2)" stroke-width="1"/>
+          <text x="185" y="246" text-anchor="middle" fill="#22d3ee" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="500">Flux CD</text>
+          <text x="185" y="260" text-anchor="middle" fill="#71717a" font-family="'JetBrains Mono',monospace" font-size="9">Source → Kustomize</text>
+
+          <!-- Node pools -->
+          <rect x="300" y="226" width="120" height="44" rx="6" fill="#111114" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+          <text x="360" y="246" text-anchor="middle" fill="#a1a1aa" font-family="'JetBrains Mono',monospace" font-size="11">Standard Pool</text>
+          <text x="360" y="260" text-anchor="middle" fill="#71717a" font-family="'JetBrains Mono',monospace" font-size="9">e2-std-2 · 1-16</text>
+
+          <rect x="440" y="226" width="120" height="44" rx="6" fill="#111114" stroke="rgba(251,146,60,0.2)" stroke-width="1"/>
+          <text x="500" y="246" text-anchor="middle" fill="#fb923c" font-family="'JetBrains Mono',monospace" font-size="11">GPU L4 (Spot)</text>
+          <text x="500" y="260" text-anchor="middle" fill="#71717a" font-family="'JetBrains Mono',monospace" font-size="9">g2-std-8 · 0-5</text>
+
+          <rect x="580" y="226" width="90" height="44" rx="6" fill="#111114" stroke="rgba(192,132,252,0.2)" stroke-width="1"/>
+          <text x="625" y="246" text-anchor="middle" fill="#c084fc" font-family="'JetBrains Mono',monospace" font-size="11">Pro6000</text>
+          <text x="625" y="260" text-anchor="middle" fill="#71717a" font-family="'JetBrains Mono',monospace" font-size="9">Spot GPU</text>
+
+          <!-- Arrows from Flux to namespaces -->
+          <line x1="185" y1="270" x2="185" y2="300" stroke="rgba(34,211,238,0.3)" stroke-width="1.5"/>
+          <line x1="185" y1="300" x2="185" y2="340" stroke="rgba(34,211,238,0.3)" stroke-width="1.5"/>
+          <line x1="185" y1="340" x2="185" y2="370" stroke="rgba(34,211,238,0.3)" stroke-width="1.5"/>
+
+          <line x1="185" y1="300" x2="380" y2="300" stroke="rgba(34,211,238,0.15)" stroke-width="1" stroke-dasharray="3 3"/>
+          <line x1="185" y1="340" x2="380" y2="340" stroke="rgba(34,211,238,0.15)" stroke-width="1" stroke-dasharray="3 3"/>
+
+          <!-- Apps -->
+          <rect x="100" y="290" width="240" height="36" rx="6" fill="#111114" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+          <text x="220" y="305" text-anchor="middle" fill="#a1a1aa" font-family="'JetBrains Mono',monospace" font-size="10">customer1 namespace</text>
+          <text x="220" y="319" text-anchor="middle" fill="#71717a" font-family="'JetBrains Mono',monospace" font-size="9">OpenClaw · News Bot · N8N</text>
+
+          <rect x="100" y="330" width="240" height="36" rx="6" fill="#111114" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+          <text x="220" y="345" text-anchor="middle" fill="#a1a1aa" font-family="'JetBrains Mono',monospace" font-size="10">Infrastructure Controllers</text>
+          <text x="220" y="359" text-anchor="middle" fill="#71717a" font-family="'JetBrains Mono',monospace" font-size="9">CNPG · KEDA · Monitoring · Tailscale</text>
+
+          <!-- Services -->
+          <rect x="380" y="300" width="100" height="30" rx="6" fill="rgba(74,222,128,0.08)" stroke="rgba(74,222,128,0.2)" stroke-width="1"/>
+          <text x="430" y="319" text-anchor="middle" fill="#4ade80" font-family="'JetBrains Mono',monospace" font-size="10">PostgreSQL HA</text>
+
+          <rect x="500" y="300" width="100" height="30" rx="6" fill="rgba(34,211,238,0.08)" stroke="rgba(34,211,238,0.2)" stroke-width="1"/>
+          <text x="550" y="319" text-anchor="middle" fill="#22d3ee" font-family="'JetBrains Mono',monospace" font-size="10">Prometheus</text>
+
+          <rect x="620" y="300" width="60" height="30" rx="6" fill="rgba(192,132,252,0.08)" stroke="rgba(192,132,252,0.2)" stroke-width="1"/>
+          <text x="650" y="319" text-anchor="middle" fill="#c084fc" font-family="'JetBrains Mono',monospace" font-size="10">Tailscale</text>
+
+          <!-- Arrows to services -->
+          <line x1="430" y1="330" x2="430" y2="370" stroke="rgba(74,222,128,0.2)" stroke-width="1" stroke-dasharray="3 3"/>
+          <line x1="550" y1="330" x2="550" y2="370" stroke="rgba(34,211,238,0.2)" stroke-width="1" stroke-dasharray="3 3"/>
+          <line x1="650" y1="330" x2="650" y2="370" stroke="rgba(192,132,252,0.2)" stroke-width="1" stroke-dasharray="3 3"/>
+
+          <!-- External access -->
+          <rect x="380" y="380" width="380" height="36" rx="6" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1" stroke-dasharray="4 4"/>
+          <text x="570" y="394" text-anchor="middle" fill="#71717a" font-family="'JetBrains Mono',monospace" font-size="10">GCP Gateway API · L7 Global Load Balancer · Dual-Stack</text>
+          <text x="570" y="410" text-anchor="middle" fill="#71717a" font-family="'JetBrains Mono',monospace" font-size="10">Telegram · Discord · Private Access (Tailscale VPN)</text>
+
+          <!-- Arrow up from gateway to cluster -->
+          <line x1="570" y1="380" x2="570" y2="330" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech Stack -->
+  <section id="stack" class="stack-section">
+    <div class="container">
+      <div class="section-label">Stack</div>
+      <h2 class="section-title">Tools of the trade.</h2>
+      <p class="section-desc">
+        Battle-tested versions, not buzzwords. Every tool here runs in production.
+      </p>
+
+      <div class="stack-grid">
+        <div class="stack-category">
+          <h4>Infrastructure</h4>
+          <div class="stack-items">
+            <div class="stack-item"><span>Terraform</span><span class="version">1.7+</span></div>
+            <div class="stack-item"><span>Google Provider</span><span class="version">7.14.1</span></div>
+            <div class="stack-item"><span>GKE</span><span class="version">Latest</span></div>
+            <div class="stack-item"><span>Custom VPC</span><span class="version">Dual-Stack</span></div>
+            <div class="stack-item"><span>Mise</span><span class="version">Tools</span></div>
+          </div>
+        </div>
+
+        <div class="stack-category">
+          <h4>Orchestration</h4>
+          <div class="stack-items">
+            <div class="stack-item"><span>Flux CD</span><span class="version">1.7.6</span></div>
+            <div class="stack-item"><span>Cilium</span><span class="version">1.18.5</span></div>
+            <div class="stack-item"><span>Helm</span><span class="version">3+</span></div>
+            <div class="stack-item"><span>Kustomize</span><span class="version">v1beta1</span></div>
+            <div class="stack-item"><span>Gateway API</span><span class="version">v1</span></div>
+          </div>
+        </div>
+
+        <div class="stack-category">
+          <h4>AI / ML Infra</h4>
+          <div class="stack-items">
+            <div class="stack-item"><span>vLLM</span><span class="version">0.9.1</span></div>
+            <div class="stack-item"><span>Qwen2.5-Coder-7B</span><span class="version">Heretic</span></div>
+            <div class="stack-item"><span>Qwen3.5-27B</span><span class="version">Heretic</span></div>
+            <div class="stack-item"><span>DeepSeek-R1</span><span class="version">Quant</span></div>
+            <div class="stack-item"><span>GPU Spot</span><span class="version">L4 · A100 · Pro6000</span></div>
+          </div>
+        </div>
+
+        <div class="stack-category">
+          <h4>Database</h4>
+          <div class="stack-items">
+            <div class="stack-item"><span>CloudNative PG</span><span class="version">0.26.1</span></div>
+            <div class="stack-item"><span>PostgreSQL</span><span class="version">15.2</span></div>
+            <div class="stack-item"><span>HA Cluster</span><span class="version">3 Nodes</span></div>
+          </div>
+        </div>
+
+        <div class="stack-category">
+          <h4>Security</h4>
+          <div class="stack-items">
+            <div class="stack-item"><span>SOPS</span><span class="version">Age</span></div>
+            <div class="stack-item"><span>Cilium NetPol</span><span class="version">eBPF</span></div>
+            <div class="stack-item"><span>Tailscale</span><span class="version">Operator</span></div>
+            <div class="stack-item"><span>Pod Security</span><span class="version">Non-root</span></div>
+          </div>
+        </div>
+
+        <div class="stack-category">
+          <h4>Observability</h4>
+          <div class="stack-items">
+            <div class="stack-item"><span>Prometheus</span><span class="version">Stack</span></div>
+            <div class="stack-item"><span>Grafana</span><span class="version">Dashboards</span></div>
+            <div class="stack-item"><span>Hubble</span><span class="version">1.18.5</span></div>
+            <div class="stack-item"><span>k9s</span><span class="version">CLI</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="contact">
+    <div class="container">
+      <h2>Let's build something that scales.</h2>
+      <p>Open for platform engineering roles, consulting, and collaborative projects.</p>
+      <div class="contact-links">
+        <a href="https://github.com/sirius0xdev/gcloud-lab" target="_blank" class="btn-primary">
+          ⬡ GitHub Repo
+        </a>
+        <a href="https://github.com/sirius0xdev" target="_blank" class="btn-secondary">
+          All Repositories
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>Built with infrastructure, not excuses. © 2026 Sirius DevOps</p>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
         }
-        
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
-        
-        function submitWaitlist() {
-            const emailInput = document.getElementById('email-input');
-            const message = document.getElementById('waitlist-message');
-            
-            if (!emailInput.value.trim()) {
-                message.textContent = "Please enter your email";
-                message.classList.remove('hidden', 'text-emerald-400');
-                message.classList.add('text-red-400');
-                return;
-            }
-            
-            message.textContent = "✅ Thank you. You've been added to the private waitlist. Lance will be in touch shortly.";
-            message.classList.remove('hidden', 'text-red-400');
-            message.classList.add('text-emerald-400');
-            emailInput.value = '';
-            
-            // Auto hide after 6s
-            setTimeout(() => {
-                message.classList.add('hidden');
-            }, 6500);
-        }
-        
-        function joinWaitlist(tier) {
-            const message = document.getElementById('waitlist-message');
-            const emailInput = document.getElementById('email-input');
-            
-            window.scrollTo({
-                top: document.getElementById('waitlist').offsetTop - 80,
-                behavior: 'smooth'
-            });
-            
-            setTimeout(() => {
-                emailInput.focus();
-                message.textContent = `Interested in the ${tier} tier. Please enter your email above.`;
-                message.classList.remove('hidden');
-                message.classList.add('text-cyan-300');
-            }, 800);
-        }
-        
-        // Initialize
-        window.onload = function() {
-            initializeTailwind();
-            
-            // Smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    if (this.getAttribute('href') !== '#') {
-                        e.preventDefault();
-                        const target = document.querySelector(this.getAttribute('href'));
-                        if (target) {
-                            const navHeight = 80;
-                            const elementPosition = target.getBoundingClientRect().top;
-                            const offsetPosition = elementPosition + window.scrollY - navHeight;
-                            
-                            window.scrollTo({
-                                top: offsetPosition,
-                                behavior: 'smooth'
-                            });
-                        }
-                    }
-                });
-            });
-            
-            // Keyboard escape for mobile menu
-            document.addEventListener('keydown', function(e) {
-                if (e.key === "Escape") {
-                    const menu = document.getElementById('mobile-menu');
-                    if (!menu.classList.contains('hidden')) {
-                        menu.classList.add('hidden');
-                    }
-                }
-            });
-            
-            console.log('%cPaaAS Landing Page ready. Built with Tailwind. Premium, minimal, and true to the business plan.', 'color:#67e8f9; font-size:10px');
-        };
-    </script>
+      });
+    });
+  </script>
 </body>
 </html>
