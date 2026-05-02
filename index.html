@@ -3,76 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sirius DevOps — Cloud-Native Infrastructure Engineer</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <title>sirius0xdev — Kubernetes Labs Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;510;590&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #09090b;
-      --bg-subtle: #0c0c0f;
-      --bg-card: #111114;
+      --bg: #08090a;
+      --panel: #0f1011;
+      --surface: #191a1b;
+      --text: #f7f8f8;
+      --text-secondary: #d0d6e0;
+      --text-tertiary: #8a8f98;
+      --text-quaternary: #62666d;
+      --accent: #5e6ad2;
+      --accent-hover: #828fff;
       --border: rgba(255,255,255,0.06);
-      --text-primary: #fafafa;
-      --text-secondary: #a1a1aa;
-      --text-muted: #71717a;
-      --accent: #22d3ee;
-      --accent-dim: rgba(34, 211, 238, 0.12);
-      --accent-mid: rgba(34, 211, 238, 0.3);
-      --green: #4ade80;
-      --green-dim: rgba(74, 222, 128, 0.12);
-      --purple: #c084fc;
-      --purple-dim: rgba(192, 132, 252, 0.12);
-      --orange: #fb923c;
-      --orange-dim: rgba(251, 146, 60, 0.12);
-      --radius: 8px;
-      --font: 'Space Grotesk', system-ui, -apple-system, sans-serif;
-      --mono: 'JetBrains Mono', 'SF Mono', ui-monospace, monospace;
+      --border-subtle: rgba(255,255,255,0.04);
+      --green: #10b981;
+      --amber: #fbbf24;
+      --cyan: #22d3ee;
+      --violet: #a78bfa;
+      --rose: #fb7185;
+      --emerald: #34d399;
+      --font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     html { scroll-behavior: smooth; }
 
     body {
       font-family: var(--font);
-      color: var(--text-primary);
       background: var(--bg);
-      line-height: 1.6;
+      color: var(--text);
+      line-height: 1.5;
       -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
     }
 
-    /* Grain overlay */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      pointer-events: none;
-      opacity: 0.03;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-size: 128px 128px;
-    }
-
-    /* Container */
+    /* ── Container ── */
     .container {
-      max-width: 1120px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 0 24px;
+      padding: 0 32px;
     }
 
-    /* Navigation */
+    /* ── Nav ── */
     nav {
-      position: fixed;
+      position: sticky;
       top: 0;
-      left: 0;
-      right: 0;
       z-index: 100;
-      background: rgba(9, 9, 11, 0.8);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
+      background: rgba(8,9,10,0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
     }
 
     nav .container {
@@ -82,1047 +64,826 @@
       height: 56px;
     }
 
-    .logo {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text-primary);
+    .nav-brand {
+      font-family: var(--mono);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
       text-decoration: none;
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
-    .logo-icon {
-      width: 20px;
-      height: 20px;
+    .nav-brand .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
       background: var(--accent);
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--bg);
-      font-family: var(--mono);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
     }
 
     .nav-links {
       display: flex;
-      gap: 28px;
+      gap: 24px;
       align-items: center;
-      list-style: none;
     }
 
     .nav-links a {
-      color: var(--text-muted);
-      text-decoration: none;
       font-size: 13px;
-      font-weight: 500;
-      transition: color 0.2s;
+      font-weight: 510;
+      color: var(--text-tertiary);
+      text-decoration: none;
+      transition: color 0.15s;
     }
 
-    .nav-links a:hover { color: var(--text-primary); }
+    .nav-links a:hover { color: var(--text); }
 
-    .nav-links .github-link {
-      color: var(--text-secondary);
-    }
-
-    /* Hero */
+    /* ── Hero ── */
     .hero {
-      padding: 160px 0 100px;
+      padding: 120px 0 80px;
+      text-align: center;
       position: relative;
     }
 
     .hero::before {
       content: '';
       position: absolute;
-      top: -100px;
+      top: 0;
       left: 50%;
       transform: translateX(-50%);
       width: 600px;
-      height: 400px;
-      background: radial-gradient(ellipse at center, rgba(34,211,238,0.06) 0%, transparent 70%);
+      height: 300px;
+      background: radial-gradient(ellipse, rgba(94,106,210,0.08) 0%, transparent 70%);
       pointer-events: none;
     }
 
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--accent-dim);
-      border: 1px solid rgba(34, 211, 238, 0.15);
-      border-radius: 9999px;
-      padding: 4px 12px;
-      font-size: 12px;
+    .hero-overline {
       font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 400;
       color: var(--accent);
-      margin-bottom: 24px;
-      font-weight: 500;
-    }
-
-    .hero-badge .dot {
-      width: 6px;
-      height: 6px;
-      background: var(--green);
-      border-radius: 50%;
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
     }
 
     .hero h1 {
-      font-size: clamp(36px, 6vw, 64px);
-      font-weight: 700;
-      line-height: 1.08;
-      letter-spacing: -0.03em;
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 510;
+      letter-spacing: -0.035em;
+      line-height: 1.05;
+      color: var(--text);
       margin-bottom: 20px;
-      max-width: 720px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
-    .hero h1 .accent { color: var(--accent); }
+    .hero h1 span { color: var(--text-tertiary); }
 
-    .hero-subtitle {
+    .hero-sub {
       font-size: 18px;
-      color: var(--text-secondary);
-      max-width: 560px;
-      line-height: 1.7;
-      margin-bottom: 40px;
+      font-weight: 400;
+      color: var(--text-tertiary);
+      line-height: 1.6;
+      max-width: 600px;
+      margin: 0 auto 36px;
     }
 
     .hero-actions {
       display: flex;
       gap: 12px;
+      justify-content: center;
       flex-wrap: wrap;
     }
 
-    .btn-primary {
+    .btn {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       padding: 10px 20px;
-      background: var(--accent);
-      color: var(--bg);
-      font-family: var(--font);
-      font-size: 14px;
-      font-weight: 600;
       border-radius: 6px;
+      font-size: 14px;
+      font-weight: 510;
       text-decoration: none;
-      transition: background 0.2s, transform 0.15s;
+      transition: all 0.15s;
+      cursor: pointer;
       border: none;
-      cursor: pointer;
     }
 
-    .btn-primary:hover {
-      background: #06b6d9;
-      transform: translateY(-1px);
-    }
-
-    .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 20px;
-      background: transparent;
-      color: var(--text-secondary);
-      font-family: var(--font);
-      font-size: 14px;
-      font-weight: 500;
-      border-radius: 6px;
-      text-decoration: none;
-      border: 1px solid var(--border);
-      transition: color 0.2s, border-color 0.2s;
-      cursor: pointer;
-    }
-
-    .btn-secondary:hover {
-      color: var(--text-primary);
-      border-color: rgba(255,255,255,0.15);
-    }
-
-    /* Terminal mockup */
-    .terminal {
-      margin-top: 64px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      font-family: var(--mono);
-      font-size: 13px;
-      max-width: 720px;
-    }
-
-    .terminal-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 16px;
-      background: rgba(255,255,255,0.02);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .terminal-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-    }
-
-    .terminal-dot.red { background: #ff5f57; }
-    .terminal-dot.yellow { background: #febc2e; }
-    .terminal-dot.green { background: #28c840; }
-
-    .terminal-title {
-      flex: 1;
-      text-align: center;
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .terminal-body {
-      padding: 16px;
-      line-height: 1.8;
-    }
-
-    .terminal-body .prompt { color: var(--green); }
-    .terminal-body .cmd { color: var(--text-primary); }
-    .terminal-body .flag { color: var(--accent); }
-    .terminal-body .comment { color: var(--text-muted); }
-    .terminal-body .output { color: var(--text-secondary); }
-    .terminal-body .success { color: var(--green); }
-    .terminal-body .warn { color: var(--orange); }
-    .terminal-body .cursor {
-      display: inline-block;
-      width: 8px;
-      height: 16px;
+    .btn-primary {
       background: var(--accent);
-      animation: blink 1s step-end infinite;
-      vertical-align: text-bottom;
-      margin-left: 2px;
+      color: #fff;
     }
+    .btn-primary:hover { background: var(--accent-hover); }
 
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
+    .btn-ghost {
+      background: rgba(255,255,255,0.03);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
     }
+    .btn-ghost:hover { background: rgba(255,255,255,0.06); color: var(--text); }
 
-    /* Stats bar */
-    .stats {
-      padding: 60px 0;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 32px;
-    }
-
-    .stat { text-align: center; }
-
-    .stat-value {
-      font-size: 32px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: var(--accent);
-      font-family: var(--mono);
-    }
-
-    .stat-label {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    /* Sections */
+    /* ── Sections ── */
     section {
-      padding: 100px 0;
+      padding: 80px 0;
     }
 
     .section-label {
-      font-size: 12px;
       font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 400;
       color: var(--accent);
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
       margin-bottom: 12px;
-      font-weight: 500;
     }
 
     .section-title {
-      font-size: clamp(24px, 4vw, 36px);
-      font-weight: 700;
+      font-size: 32px;
+      font-weight: 510;
       letter-spacing: -0.02em;
+      line-height: 1.1;
       margin-bottom: 12px;
     }
 
     .section-desc {
       font-size: 16px;
-      color: var(--text-secondary);
+      color: var(--text-tertiary);
+      line-height: 1.6;
       max-width: 560px;
-      line-height: 1.7;
       margin-bottom: 48px;
     }
 
-    /* Capabilities */
-    .capabilities-grid {
+    /* ── Lab Cards ── */
+    .lab-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+      gap: 20px;
     }
 
-    .capability-card {
-      background: var(--bg-card);
+    .lab-card {
+      background: rgba(255,255,255,0.02);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px;
-      transition: border-color 0.3s, transform 0.2s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .capability-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--accent), transparent);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-
-    .capability-card:hover {
-      border-color: rgba(34,211,238,0.2);
-      transform: translateY(-2px);
-    }
-
-    .capability-card:hover::before { opacity: 1; }
-
-    .capability-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      margin-bottom: 16px;
-    }
-
-    .capability-icon.cyan { background: var(--accent-dim); color: var(--accent); }
-    .capability-icon.green { background: var(--green-dim); color: var(--green); }
-    .capability-icon.purple { background: var(--purple-dim); color: var(--purple); }
-    .capability-icon.orange { background: var(--orange-dim); color: var(--orange); }
-
-    .capability-card h3 {
-      font-size: 16px;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-
-    .capability-card p {
-      font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.6;
-    }
-
-    .capability-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 12px;
-    }
-
-    .tag {
-      font-size: 11px;
-      font-family: var(--mono);
-      padding: 2px 8px;
-      border-radius: 9999px;
-      background: rgba(255,255,255,0.04);
-      color: var(--text-muted);
-      border: 1px solid var(--border);
-    }
-
-    /* Projects */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 24px;
-    }
-
-    .project-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      transition: border-color 0.3s;
-    }
-
-    .project-card:hover {
-      border-color: rgba(255,255,255,0.12);
-    }
-
-    .project-card:first-child {
-      grid-template-columns: 1fr;
-    }
-
-    .project-content {
+      border-radius: 12px;
       padding: 32px;
+      transition: border-color 0.2s;
     }
 
-    .project-card:first-child .project-content {
-      padding: 32px;
+    .lab-card:hover { border-color: rgba(255,255,255,0.12); }
+
+    .lab-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 20px;
     }
 
-    .project-type {
-      font-size: 11px;
-      font-family: var(--mono);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--accent);
-      margin-bottom: 8px;
-      font-weight: 500;
-    }
-
-    .project-content h3 {
+    .lab-card-title {
       font-size: 20px;
-      font-weight: 600;
-      margin-bottom: 12px;
+      font-weight: 590;
       letter-spacing: -0.01em;
     }
 
-    .project-content p {
-      font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.7;
-      margin-bottom: 16px;
+    .lab-card-badge {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 400;
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--text-tertiary);
     }
 
-    .project-features {
+    .lab-card-badge.gcp { border-color: rgba(66,133,244,0.3); color: #4285f4; }
+    .lab-card-badge.baremetal { border-color: rgba(34,211,238,0.3); color: var(--cyan); }
+
+    .lab-card-desc {
+      font-size: 14px;
+      color: var(--text-tertiary);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .lab-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+
+    .lab-tech span {
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.03);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .lab-workloads {
+      margin-bottom: 24px;
+    }
+
+    .lab-workloads h4 {
+      font-size: 12px;
+      font-weight: 510;
+      color: var(--text-quaternary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
+    }
+
+    .lab-workloads ul {
       list-style: none;
       display: flex;
       flex-direction: column;
       gap: 6px;
     }
 
-    .project-features li {
-      font-size: 13px;
+    .lab-workloads li {
+      font-size: 14px;
       color: var(--text-secondary);
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
+      padding-left: 16px;
+      position: relative;
     }
 
-    .project-features li::before {
+    .lab-workloads li::before {
       content: '→';
-      color: var(--accent);
-      font-family: var(--mono);
-      font-size: 11px;
-      margin-top: 2px;
-      flex-shrink: 0;
-    }
-
-    .project-visual {
-      background: rgba(0,0,0,0.3);
-      border-left: 1px solid var(--border);
-      padding: 24px;
-      font-family: var(--mono);
+      position: absolute;
+      left: 0;
+      color: var(--text-quaternary);
       font-size: 12px;
-      line-height: 1.7;
-      color: var(--text-muted);
-      overflow: auto;
     }
 
-    .project-visual .hl { color: var(--accent); }
-    .project-visual .str { color: var(--green); }
-    .project-visual .key { color: var(--purple); }
-
-    /* Tech Stack */
-    .stack-section {
-      background: var(--bg-subtle);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
+    .lab-card .btn {
+      font-size: 13px;
+      padding: 8px 16px;
     }
 
+    /* ── Tech Stack Matrix ── */
     .stack-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 32px;
-    }
-
-    .stack-category h4 {
-      font-size: 13px;
-      font-family: var(--mono);
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 16px;
-    }
-
-    .stack-items {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
     }
 
     .stack-item {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      gap: 12px;
+      transition: border-color 0.2s;
+    }
+
+    .stack-item:hover { border-color: rgba(255,255,255,0.12); }
+
+    .stack-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .stack-name {
+      font-size: 14px;
+      font-weight: 510;
+    }
+
+    .stack-role {
+      font-size: 12px;
+      color: var(--text-tertiary);
+    }
+
+    /* ── Workload Cards ── */
+    .workload-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 12px;
+    }
+
+    .workload-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      transition: border-color 0.2s;
+    }
+
+    .workload-card:hover { border-color: rgba(255,255,255,0.12); }
+
+    .workload-card h4 {
+      font-size: 15px;
+      font-weight: 590;
+      margin-bottom: 6px;
+    }
+
+    .workload-card p {
+      font-size: 13px;
+      color: var(--text-tertiary);
+      line-height: 1.5;
+    }
+
+    .workload-card .lab-tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 10px;
+      margin-top: 10px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--text-quaternary);
+    }
+
+    /* ── Skills ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 16px;
+    }
+
+    .skill-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+    }
+
+    .skill-card h4 {
+      font-size: 15px;
+      font-weight: 590;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .skill-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .skill-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .skill-card li {
       font-size: 14px;
       color: var(--text-secondary);
+      padding-left: 16px;
+      position: relative;
     }
 
-    .stack-item .version {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--text-muted);
-      background: rgba(255,255,255,0.04);
-      padding: 2px 8px;
-      border-radius: 9999px;
+    .skill-card li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--text-quaternary);
     }
 
-    /* Architecture Diagram */
-    .arch-container {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 32px;
-      overflow-x: auto;
-    }
-
-    .arch-container svg {
-      width: 100%;
+    /* ── Value / Why ── */
+    .value-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 16px;
       max-width: 800px;
-      height: auto;
-      margin: 0 auto;
+    }
+
+    .value-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 16px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .value-check {
+      color: var(--green);
+      font-size: 16px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .value-item strong {
+      font-weight: 590;
+      font-size: 14px;
       display: block;
+      margin-bottom: 4px;
     }
 
-    /* Contact */
-    .contact {
+    .value-item span {
+      font-size: 13px;
+      color: var(--text-tertiary);
+      line-height: 1.5;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
       text-align: center;
-      padding: 120px 0;
+      padding: 100px 0;
+      border-top: 1px solid var(--border-subtle);
     }
 
-    .contact h2 {
-      font-size: clamp(28px, 5vw, 42px);
-      font-weight: 700;
-      letter-spacing: -0.03em;
+    .cta-section h2 {
+      font-size: clamp(28px, 3.5vw, 42px);
+      font-weight: 510;
+      letter-spacing: -0.025em;
       margin-bottom: 16px;
     }
 
-    .contact p {
-      color: var(--text-secondary);
+    .cta-section p {
       font-size: 16px;
+      color: var(--text-tertiary);
       margin-bottom: 32px;
     }
 
-    .contact-links {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    /* Footer */
+    /* ── Footer ── */
     footer {
-      border-top: 1px solid var(--border);
-      padding: 24px 0;
+      padding: 32px 0;
+      border-top: 1px solid var(--border-subtle);
       text-align: center;
     }
 
     footer p {
-      font-size: 13px;
-      color: var(--text-muted);
+      font-size: 12px;
+      color: var(--text-quaternary);
+      font-family: var(--mono);
     }
 
-    /* Responsive */
+    footer a {
+      color: var(--text-tertiary);
+      text-decoration: none;
+    }
+    footer a:hover { color: var(--text); }
+
+    /* ── Responsive ── */
     @media (max-width: 768px) {
-      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
-      .capabilities-grid { grid-template-columns: 1fr; }
-      .stack-grid { grid-template-columns: 1fr; gap: 24px; }
-      .project-card { grid-template-columns: 1fr; }
-      .project-visual { border-left: none; border-top: 1px solid var(--border); }
+      .container { padding: 0 20px; }
+      .hero { padding: 80px 0 60px; }
+      section { padding: 60px 0; }
+      .lab-grid { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .value-list { grid-template-columns: 1fr; }
+      .stack-grid { grid-template-columns: repeat(2, 1fr); }
+      .workload-grid { grid-template-columns: 1fr; }
       .nav-links { display: none; }
-      section { padding: 80px 0; }
-      .hero { padding: 120px 0 80px; }
     }
 
-    /* Scroll animations */
-    .reveal {
+    /* ── Scroll animations ── */
+    .fade-in {
       opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
+      transform: translateY(12px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
-
-    .reveal.visible {
+    .fade-in.visible {
       opacity: 1;
       transform: translateY(0);
+    }
+
+    /* ── Reduced motion ── */
+    @media (prefers-reduced-motion: reduce) {
+      .fade-in { opacity: 1; transform: none; }
+      * { animation: none !important; transition-duration: 0.01ms !important; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Navigation -->
+  <!-- Nav -->
   <nav>
     <div class="container">
-      <a href="#" class="logo">
-        <span class="logo-icon">S</span>
-        sirius devops
-      </a>
-      <ul class="nav-links">
-        <li><a href="#capabilities">Capabilities</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#stack">Stack</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li><a href="https://github.com/sirius0xdev/gcloud-lab" target="_blank" class="github-link">⬡ GitHub</a></li>
-      </ul>
+      <a href="#" class="nav-brand"><span class="dot"></span>sirius0xdev</a>
+      <div class="nav-links">
+        <a href="#labs">Labs</a>
+        <a href="#stack">Stack</a>
+        <a href="#workloads">Workloads</a>
+        <a href="#skills">Skills</a>
+        <a href="https://github.com/sirius0xdev" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
     </div>
   </nav>
 
   <!-- Hero -->
-  <section class="hero">
+  <header class="hero">
     <div class="container">
-      <div class="hero-badge">
-        <span class="dot"></span>
-        Infrastructure Engineer
-      </div>
-      <h1>
-        Ship resilient cloud<br>
-        infrastructure, <span class="accent">not just code.</span>
-      </h1>
-      <p class="hero-subtitle">
-        I design and operate cloud-native platforms on Google Cloud — multi-cluster Kubernetes,
-        GitOps pipelines, GPU-inference orchestration, and autonomous data systems that run
-        themselves.
+      <p class="hero-overline">Kubernetes &amp; DevOps Engineer</p>
+      <h1>Production-grade <span>Kubernetes</span> labs.</h1>
+      <p class="hero-sub">
+        Two advanced, production-simulated environments demonstrating deep expertise in cloud-native infrastructure, GPU-accelerated AI serving, GitOps at scale, and eBPF networking.
       </p>
       <div class="hero-actions">
-        <a href="https://github.com/sirius0xdev/gcloud-lab" target="_blank" class="btn-primary">
-          ⬡ View on GitHub
-        </a>
-        <a href="#projects" class="btn-secondary">
-          See what I build →
-        </a>
-      </div>
-
-      <!-- Terminal -->
-      <div class="terminal">
-        <div class="terminal-header">
-          <span class="terminal-dot red"></span>
-          <span class="terminal-dot yellow"></span>
-          <span class="terminal-dot green"></span>
-          <span class="terminal-title">~/gcloud-lab — bash</span>
-        </div>
-        <div class="terminal-body">
-          <div><span class="prompt">→ </span><span class="cmd">kubectl get nodes</span></div>
-          <div class="output">NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;STATUS&nbsp;&nbsp;ROLES&nbsp;&nbsp;&nbsp;AGE&nbsp;&nbsp;VERSION</div>
-          <div class="success">gke-cluster-pool-1&nbsp;Ready&nbsp;&nbsp;master&nbsp;&nbsp;45d&nbsp;v1.32.4</div>
-          <div class="success">gke-cluster-gpu-l4&nbsp;&nbsp;Ready&nbsp;&nbsp;gpu&nbsp;&nbsp;&nbsp;&nbsp;32d&nbsp;v1.32.4</div>
-          <div class="success">gke-cluster-a100-0&nbsp;&nbsp;Ready&nbsp;&nbsp;gpu&nbsp;&nbsp;&nbsp;&nbsp;12d&nbsp;v1.32.4</div>
-          <br>
-          <div><span class="prompt">→ </span><span class="cmd">flux get reconcile</span></div>
-          <div class="output">&nbsp;&nbsp;INFRA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;STATUS</div>
-          <div class="success">cnpg-operator&nbsp;&nbsp;&nbsp;&nbsp;Succeeded&nbsp;&nbsp;15s ago</div>
-          <div class="success">keda&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Succeeded&nbsp;&nbsp;15s ago</div>
-          <div class="success">openclaw-brain&nbsp;&nbsp;&nbsp;Succeeded&nbsp;&nbsp;15s ago</div>
-          <br>
-          <div><span class="prompt">→ </span><span class="cursor"></span></div>
-        </div>
+        <a href="https://github.com/sirius0xdev/gcloud-lab" target="_blank" rel="noopener" class="btn btn-primary">View gcloud-lab ↗</a>
+        <a href="https://github.com/sirius0xdev/lab" target="_blank" rel="noopener" class="btn btn-ghost">View lab ↗</a>
       </div>
     </div>
-  </section>
+  </header>
 
-  <!-- Stats -->
-  <section class="stats" style="padding: 48px 0;">
+  <!-- Labs -->
+  <section id="labs">
     <div class="container">
-      <div class="stats-grid">
-        <div class="stat">
-          <div class="stat-value">3</div>
-          <div class="stat-label">GPU Node Pools (Spot)</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value">371</div>
-          <div class="stat-label">Feeds Scraped / Cycle</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value">90%</div>
-          <div class="stat-label">GPU Cost Reduction</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value">24/7</div>
-          <div class="stat-label">Platform Uptime</div>
-        </div>
-      </div>
-    </div>
-  </section>
+      <p class="section-label">Labs</p>
+      <h2 class="section-title">Two environments, one mission</h2>
+      <p class="section-desc">Cloud-managed GKE and bare-metal kubeadm clusters — each designed to solve real infrastructure challenges.</p>
 
-  <!-- Capabilities -->
-  <section id="capabilities">
-    <div class="container">
-      <div class="section-label">Capabilities</div>
-      <h2 class="section-title">End-to-end platform engineering.</h2>
-      <p class="section-desc">
-        From bare-metal GKE provisioning to self-healing application platforms —
-        everything version-controlled, reproducible, and observable.
-      </p>
-
-      <div class="capabilities-grid">
-        <div class="capability-card reveal">
-          <div class="capability-icon cyan">⬡</div>
-          <h3>Infrastructure as Code</h3>
-          <p>Terraform modules for GKE, VPC networking, GPU node pools, and secrets encryption with SOPS + Age. Every resource version-controlled.</p>
-          <div class="capability-tags">
-            <span class="tag">Terraform</span>
-            <span class="tag">GCP</span>
-            <span class="tag">SOPS</span>
-            <span class="tag">Age</span>
+      <div class="lab-grid">
+        <!-- GCP Lab -->
+        <div class="lab-card fade-in">
+          <div class="lab-card-header">
+            <h3 class="lab-card-title">gcloud-lab</h3>
+            <span class="lab-card-badge gcp">GKE</span>
           </div>
-        </div>
-
-        <div class="capability-card reveal">
-          <div class="capability-icon green">◈</div>
-          <h3>GitOps & CI/CD</h3>
-          <p>Flux CD bootstrapped via Terraform, Kustomize overlays for env promotion, GitHub Actions for container builds. Zero manual deploys.</p>
-          <div class="capability-tags">
-            <span class="tag">Flux CD</span>
-            <span class="tag">Kustomize</span>
-            <span class="tag">Helm</span>
-            <span class="tag">GHCR</span>
+          <p class="lab-card-desc">
+            Enterprise-grade environment on Google Kubernetes Engine with heavy focus on GPU-accelerated private AI/LLM inference, financial data pipelines, workflow automation, and cost-optimized infrastructure.
+          </p>
+          <div class="lab-tech">
+            <span>Terraform</span>
+            <span>Flux CD</span>
+            <span>Cilium</span>
+            <span>vLLM</span>
+            <span>KEDA</span>
+            <span>CloudNativePG</span>
+            <span>SOPS + Age</span>
+            <span>Gateway API</span>
+            <span>N8N</span>
           </div>
-        </div>
-
-        <div class="capability-card reveal">
-          <div class="capability-icon purple">△</div>
-          <h3>Kubernetes at Scale</h3>
-          <p>Multi-node-pool clusters with custom CNI (Cilium), Gateway API routing, pod security, network policies, and autoscaling to zero.</p>
-          <div class="capability-tags">
-            <span class="tag">GKE</span>
-            <span class="tag">Cilium</span>
-            <span class="tag">Gateway API</span>
-            <span class="tag">KEDA</span>
-          </div>
-        </div>
-
-        <div class="capability-card reveal">
-          <div class="capability-icon orange">⚡</div>
-          <h3>GPU Inference Orchestration</h3>
-          <p>Dual-tier vLLM platforms on spot GPU instances — L4 dispatchers running 24/7, A100/Pro6000 thinkers scaling via KEDA. fp8 KV cache, chunked prefill.</p>
-          <div class="capability-tags">
-            <span class="tag">vLLM</span>
-            <span class="tag">NVIDIA L4</span>
-            <span class="tag">A100</span>
-            <span class="tag">RTX Pro 6000</span>
-          </div>
-        </div>
-
-        <div class="capability-card reveal">
-          <div class="capability-icon cyan">◉</div>
-          <h3>Observability</h3>
-          <p>Prometheus + Grafana for metrics, Cilium Hubble for network tracing, k9s for interactive cluster management. Monitoring that doesn't leak publicly.</p>
-          <div class="capability-tags">
-            <span class="tag">Prometheus</span>
-            <span class="tag">Grafana</span>
-            <span class="tag">Hubble</span>
-            <span class="tag">k9s</span>
-          </div>
-        </div>
-
-        <div class="capability-card reveal">
-          <div class="capability-icon green">◆</div>
-          <h3>Autonomous Systems</h3>
-          <p>Self-running pipelines — news scraping, LLM-powered analysis, futures trading signals, workflow automation. CronJobs, no human in the loop.</p>
-          <div class="capability-tags">
-            <span class="tag">Python</span>
-            <span class="tag">Scrapy</span>
-            <span class="tag">N8N</span>
-            <span class="tag">CronJob</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Projects -->
-  <section id="projects">
-    <div class="container">
-      <div class="section-label">Featured Work</div>
-      <h2 class="section-title">Systems that run themselves.</h2>
-      <p class="section-desc">
-        Each project demonstrates a different facet of platform engineering —
-        from GPU-orchestrated inference to autonomous market intelligence.
-      </p>
-
-      <div class="projects-grid">
-        <!-- PAaaS - Full width -->
-        <div class="project-card reveal">
-          <div class="project-content">
-            <div class="project-type">AI Infrastructure</div>
-            <h3>OpenClaw PAaaS — Dual-Tier LLM Platform</h3>
-            <p>
-              Privacy-first AI assistant platform with a two-tier cognitive architecture.
-              Tier 1 dispatches on always-on L4 GPUs. Tier 2 scales A100/Pro6000 thinkers
-              from zero via KEDA — massive context windows for deep reasoning, zero cost
-              when idle.
-            </p>
-            <ul class="project-features">
-              <li>vLLM serving Qwen2.5-Coder-7B (L4) → Qwen3.5-27B (Pro6000)</li>
-              <li>KEDA autoscaling from 0 with spot instance orchestration</li>
-              <li>fp8 KV cache + chunked prefill for massive multi-file context</li>
-              <li>Multi-tenant: isolated deployments per customer namespace</li>
-              <li>Outbound polling to Telegram / Discord — no public ingress</li>
+          <div class="lab-workloads">
+            <h4>Running Workloads</h4>
+            <ul>
+              <li>OpenClaw — Dual-tier vLLM PAaaS (L4 + A100 Spot GPUs)</li>
+              <li>News Intelligence Pipeline — Scrapy + DeepSeek-R1 + Telegram bot</li>
+              <li>N8N — Workflow automation platform</li>
+              <li>Tailscale Operator — Secure VPN access</li>
             </ul>
           </div>
-          <div class="project-visual">
-            <span class="key">cluster</span>: devops-lab-cluster<br>
-            <span class="key">region</span>: <span class="str">us-central1-a</span><br>
-            <span class="key">nodePools</span>:<br>
-            &nbsp;&nbsp;- <span class="key">name</span>: <span class="str">standard</span><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;<span class="key">type</span>: <span class="str">e2-standard-2</span><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;<span class="key">scale</span>: 1–16<br>
-            &nbsp;&nbsp;- <span class="key">name</span>: <span class="str">gpu-l4</span><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;<span class="key">type</span>: <span class="str">g2-standard-8</span><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;<span class="key">spot</span>: <span class="hl">true</span><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;<span class="key">scale</span>: 0–5<br>
-            &nbsp;&nbsp;- <span class="key">name</span>: <span class="str">a100</span><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;<span class="key">type</span>: <span class="str">a2-highgpu-1g</span><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;<span class="key">spot</span>: <span class="hl">true</span><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;<span class="key">scale</span>: 0–1<br>
-            <br>
-            <span class="key">gitOps</span>:<br>
-            &nbsp;&nbsp;<span class="key">engine</span>: <span class="str">Flux CD 1.7.6</span><br>
-            &nbsp;&nbsp;<span class="key">interval</span>: <span class="str">1m</span><br>
-            &nbsp;&nbsp;<span class="key">paths</span>: [infra, apps]
-          </div>
+          <a href="https://github.com/sirius0xdev/gcloud-lab" target="_blank" rel="noopener" class="btn btn-ghost">Explore repo ↗</a>
         </div>
 
-        <!-- News Bot -->
-        <div class="project-card reveal">
-          <div class="project-content">
-            <div class="project-type">Autonomous Data Pipeline</div>
-            <h3>News Quant Pipeline</h3>
-            <p>
-              Scrape 371 global financial feeds, run through DeepSeek-R1 analysis
-              with a strict reasoning protocol, generate futures trading signals with
-              explicit entry/exit levels. All inference runs locally — no API calls,
-              no throttling during market panics.
-            </p>
-            <ul class="project-features">
-              <li>371 feeds across global markets</li>
-              <li>DeepSeek-R1 with 10-step reasoning chain</li>
-              <li>Futures targets: /ES, /CL, /NQ with R:R levels</li>
-              <li>End-to-end VPC-private — zero external data exposure</li>
+        <!-- Bare-metal Lab -->
+        <div class="lab-card fade-in">
+          <div class="lab-card-header">
+            <h3 class="lab-card-title">lab</h3>
+            <span class="lab-card-badge baremetal">Bare-Metal</span>
+          </div>
+          <p class="lab-card-desc">
+            Self-managed Kubernetes cluster bootstrapped with kubeadm, showcasing advanced Cilium networking (BGP + L2), diverse workloads spanning blockchain, gaming, and messaging, with mature GitOps and automated dependency management.
+          </p>
+          <div class="lab-tech">
+            <span>kubeadm</span>
+            <span>Flux CD</span>
+            <span>Renovate</span>
+            <span>Cilium + Hubble</span>
+            <span>BGP / L2</span>
+            <span>CloudNativePG</span>
+            <span>MariaDB</span>
+            <span>SOPS + Age</span>
+          </div>
+          <div class="lab-workloads">
+            <h4>Running Workloads</h4>
+            <ul>
+              <li>Zcash — Full node + lightwallet gRPC service</li>
+              <li>Multipaper — Minecraft server cluster (Velocity proxy)</li>
+              <li>Prosody — XMPP/Jabber messaging server</li>
+              <li>Linkding — Self-hosted bookmark manager</li>
             </ul>
           </div>
-          <div class="project-visual">
-            <span class="key">pipeline</span>: <span class="str">news_bot</span><br>
-            <span class="key">schedule</span>: <span class="str">every 10 min</span><br>
-            <br>
-            <span class="key">stages</span>:<br>
-            &nbsp;&nbsp;1. <span class="hl">scraper</span> @ :50<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;→ 371 feeds pulled<br>
-            &nbsp;&nbsp;2. <span class="hl">analyst</span> @ :55<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;→ DeepSeek-R1 analysis<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;→ 10-step reasoning<br>
-            &nbsp;&nbsp;3. <span class="hl">telebot</span> @ :58<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;→ Telegram delivery<br>
-            <br>
-            <span class="key">privacy</span>: <span class="hl">VPC-only</span><br>
-            <span class="key">models</span>: <span class="str">local</span> (no API calls)
-          </div>
+          <a href="https://github.com/sirius0xdev/lab" target="_blank" rel="noopener" class="btn btn-ghost">Explore repo ↗</a>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Architecture Diagram -->
-  <section>
-    <div class="container">
-      <div class="section-label">Architecture</div>
-      <h2 class="section-title">GitOps on GCP.</h2>
-      <p class="section-desc">
-        Everything declarative, version-controlled, and continuously reconciled.
-        From Terraform provisioning to Flux applying manifests — no manual cluster access needed.
-      </p>
-
-      <div class="arch-container">
-        <svg viewBox="0 0 760 480" xmlns="http://www.w3.org/2000/svg">
-          <!-- GitHub -->
-          <rect x="300" y="20" width="160" height="56" rx="8" fill="#111114" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
-          <text x="380" y="44" text-anchor="middle" fill="#71717a" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="500">GitHub</text>
-          <text x="380" y="62" text-anchor="middle" fill="#a1a1aa" font-family="'JetBrains Mono',monospace" font-size="10">gcloud-lab</text>
-
-          <!-- Arrow down -->
-          <line x1="380" y1="76" x2="380" y2="110" stroke="#22d3ee" stroke-width="1.5" stroke-dasharray="4 3"/>
-          <polygon points="376,108 380,116 384,108" fill="#22d3ee"/>
-
-          <!-- Terraform -->
-          <rect x="300" y="110" width="160" height="48" rx="8" fill="#111114" stroke="rgba(34,211,238,0.3)" stroke-width="1"/>
-          <text x="380" y="130" text-anchor="middle" fill="#22d3ee" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="500">Terraform</text>
-          <text x="380" y="146" text-anchor="middle" fill="#71717a" font-family="'JetBrains Mono',monospace" font-size="10">Provision GKE + Flux Bootstrap</text>
-
-          <!-- Arrow down -->
-          <line x1="380" y1="158" x2="380" y2="186" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
-
-          <!-- GKE Cluster (big box) -->
-          <rect x="80" y="186" width="600" height="280" rx="12" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1" stroke-dasharray="6 4"/>
-          <text x="106" y="210" fill="#71717a" font-family="'JetBrains Mono',monospace" font-size="10">devops-lab-cluster · us-central1-a · Cilium CNI</text>
-
-          <!-- Flux -->
-          <rect x="120" y="226" width="130" height="44" rx="6" fill="rgba(34,211,238,0.08)" stroke="rgba(34,211,238,0.2)" stroke-width="1"/>
-          <text x="185" y="246" text-anchor="middle" fill="#22d3ee" font-family="'JetBrains Mono',monospace" font-size="11" font-weight="500">Flux CD</text>
-          <text x="185" y="260" text-anchor="middle" fill="#71717a" font-family="'JetBrains Mono',monospace" font-size="9">Source → Kustomize</text>
-
-          <!-- Node pools -->
-          <rect x="300" y="226" width="120" height="44" rx="6" fill="#111114" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
-          <text x="360" y="246" text-anchor="middle" fill="#a1a1aa" font-family="'JetBrains Mono',monospace" font-size="11">Standard Pool</text>
-          <text x="360" y="260" text-anchor="middle" fill="#71717a" font-family="'JetBrains Mono',monospace" font-size="9">e2-std-2 · 1-16</text>
-
-          <rect x="440" y="226" width="120" height="44" rx="6" fill="#111114" stroke="rgba(251,146,60,0.2)" stroke-width="1"/>
-          <text x="500" y="246" text-anchor="middle" fill="#fb923c" font-family="'JetBrains Mono',monospace" font-size="11">GPU L4 (Spot)</text>
-          <text x="500" y="260" text-anchor="middle" fill="#71717a" font-family="'JetBrains Mono',monospace" font-size="9">g2-std-8 · 0-5</text>
-
-          <rect x="580" y="226" width="90" height="44" rx="6" fill="#111114" stroke="rgba(192,132,252,0.2)" stroke-width="1"/>
-          <text x="625" y="246" text-anchor="middle" fill="#c084fc" font-family="'JetBrains Mono',monospace" font-size="11">Pro6000</text>
-          <text x="625" y="260" text-anchor="middle" fill="#71717a" font-family="'JetBrains Mono',monospace" font-size="9">Spot GPU</text>
-
-          <!-- Arrows from Flux to namespaces -->
-          <line x1="185" y1="270" x2="185" y2="300" stroke="rgba(34,211,238,0.3)" stroke-width="1.5"/>
-          <line x1="185" y1="300" x2="185" y2="340" stroke="rgba(34,211,238,0.3)" stroke-width="1.5"/>
-          <line x1="185" y1="340" x2="185" y2="370" stroke="rgba(34,211,238,0.3)" stroke-width="1.5"/>
-
-          <line x1="185" y1="300" x2="380" y2="300" stroke="rgba(34,211,238,0.15)" stroke-width="1" stroke-dasharray="3 3"/>
-          <line x1="185" y1="340" x2="380" y2="340" stroke="rgba(34,211,238,0.15)" stroke-width="1" stroke-dasharray="3 3"/>
-
-          <!-- Apps -->
-          <rect x="100" y="290" width="240" height="36" rx="6" fill="#111114" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
-          <text x="220" y="305" text-anchor="middle" fill="#a1a1aa" font-family="'JetBrains Mono',monospace" font-size="10">customer1 namespace</text>
-          <text x="220" y="319" text-anchor="middle" fill="#71717a" font-family="'JetBrains Mono',monospace" font-size="9">OpenClaw · News Bot · N8N</text>
-
-          <rect x="100" y="330" width="240" height="36" rx="6" fill="#111114" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
-          <text x="220" y="345" text-anchor="middle" fill="#a1a1aa" font-family="'JetBrains Mono',monospace" font-size="10">Infrastructure Controllers</text>
-          <text x="220" y="359" text-anchor="middle" fill="#71717a" font-family="'JetBrains Mono',monospace" font-size="9">CNPG · KEDA · Monitoring · Tailscale</text>
-
-          <!-- Services -->
-          <rect x="380" y="300" width="100" height="30" rx="6" fill="rgba(74,222,128,0.08)" stroke="rgba(74,222,128,0.2)" stroke-width="1"/>
-          <text x="430" y="319" text-anchor="middle" fill="#4ade80" font-family="'JetBrains Mono',monospace" font-size="10">PostgreSQL HA</text>
-
-          <rect x="500" y="300" width="100" height="30" rx="6" fill="rgba(34,211,238,0.08)" stroke="rgba(34,211,238,0.2)" stroke-width="1"/>
-          <text x="550" y="319" text-anchor="middle" fill="#22d3ee" font-family="'JetBrains Mono',monospace" font-size="10">Prometheus</text>
-
-          <rect x="620" y="300" width="60" height="30" rx="6" fill="rgba(192,132,252,0.08)" stroke="rgba(192,132,252,0.2)" stroke-width="1"/>
-          <text x="650" y="319" text-anchor="middle" fill="#c084fc" font-family="'JetBrains Mono',monospace" font-size="10">Tailscale</text>
-
-          <!-- Arrows to services -->
-          <line x1="430" y1="330" x2="430" y2="370" stroke="rgba(74,222,128,0.2)" stroke-width="1" stroke-dasharray="3 3"/>
-          <line x1="550" y1="330" x2="550" y2="370" stroke="rgba(34,211,238,0.2)" stroke-width="1" stroke-dasharray="3 3"/>
-          <line x1="650" y1="330" x2="650" y2="370" stroke="rgba(192,132,252,0.2)" stroke-width="1" stroke-dasharray="3 3"/>
-
-          <!-- External access -->
-          <rect x="380" y="380" width="380" height="36" rx="6" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1" stroke-dasharray="4 4"/>
-          <text x="570" y="394" text-anchor="middle" fill="#71717a" font-family="'JetBrains Mono',monospace" font-size="10">GCP Gateway API · L7 Global Load Balancer · Dual-Stack</text>
-          <text x="570" y="410" text-anchor="middle" fill="#71717a" font-family="'JetBrains Mono',monospace" font-size="10">Telegram · Discord · Private Access (Tailscale VPN)</text>
-
-          <!-- Arrow up from gateway to cluster -->
-          <line x1="570" y1="380" x2="570" y2="330" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
-        </svg>
       </div>
     </div>
   </section>
 
   <!-- Tech Stack -->
-  <section id="stack" class="stack-section">
+  <section id="stack">
     <div class="container">
-      <div class="section-label">Stack</div>
-      <h2 class="section-title">Tools of the trade.</h2>
-      <p class="section-desc">
-        Battle-tested versions, not buzzwords. Every tool here runs in production.
-      </p>
+      <p class="section-label">Stack</p>
+      <h2 class="section-title">Technologies at a glance</h2>
+      <p class="section-desc">Core tools and platforms across both labs.</p>
 
       <div class="stack-grid">
-        <div class="stack-category">
-          <h4>Infrastructure</h4>
-          <div class="stack-items">
-            <div class="stack-item"><span>Terraform</span><span class="version">1.7+</span></div>
-            <div class="stack-item"><span>Google Provider</span><span class="version">7.14.1</span></div>
-            <div class="stack-item"><span>GKE</span><span class="version">Latest</span></div>
-            <div class="stack-item"><span>Custom VPC</span><span class="version">Dual-Stack</span></div>
-            <div class="stack-item"><span>Mise</span><span class="version">Tools</span></div>
-          </div>
+        <div class="stack-item fade-in">
+          <div class="stack-icon" style="background:rgba(56,178,172,0.15); color:#38b2ac;">⎈</div>
+          <div><div class="stack-name">Kubernetes</div><div class="stack-role">GKE + kubeadm</div></div>
         </div>
-
-        <div class="stack-category">
-          <h4>Orchestration</h4>
-          <div class="stack-items">
-            <div class="stack-item"><span>Flux CD</span><span class="version">1.7.6</span></div>
-            <div class="stack-item"><span>Cilium</span><span class="version">1.18.5</span></div>
-            <div class="stack-item"><span>Helm</span><span class="version">3+</span></div>
-            <div class="stack-item"><span>Kustomize</span><span class="version">v1beta1</span></div>
-            <div class="stack-item"><span>Gateway API</span><span class="version">v1</span></div>
-          </div>
+        <div class="stack-item fade-in">
+          <div class="stack-icon" style="background:rgba(94,106,210,0.15); color:#5e6ad2;">Fl</div>
+          <div><div class="stack-name">Flux CD</div><div class="stack-role">GitOps controller</div></div>
         </div>
-
-        <div class="stack-category">
-          <h4>AI / ML Infra</h4>
-          <div class="stack-items">
-            <div class="stack-item"><span>vLLM</span><span class="version">0.9.1</span></div>
-            <div class="stack-item"><span>Qwen2.5-Coder-7B</span><span class="version">Heretic</span></div>
-            <div class="stack-item"><span>Qwen3.5-27B</span><span class="version">Heretic</span></div>
-            <div class="stack-item"><span>DeepSeek-R1</span><span class="version">Quant</span></div>
-            <div class="stack-item"><span>GPU Spot</span><span class="version">L4 · A100 · Pro6000</span></div>
-          </div>
+        <div class="stack-item fade-in">
+          <div class="stack-icon" style="background:rgba(251,191,36,0.15); color:#fbbf24;">Tf</div>
+          <div><div class="stack-name">Terraform</div><div class="stack-role">Infrastructure as Code</div></div>
         </div>
-
-        <div class="stack-category">
-          <h4>Database</h4>
-          <div class="stack-items">
-            <div class="stack-item"><span>CloudNative PG</span><span class="version">0.26.1</span></div>
-            <div class="stack-item"><span>PostgreSQL</span><span class="version">15.2</span></div>
-            <div class="stack-item"><span>HA Cluster</span><span class="version">3 Nodes</span></div>
-          </div>
+        <div class="stack-item fade-in">
+          <div class="stack-icon" style="background:rgba(34,211,238,0.15); color:#22d3ee;">Ci</div>
+          <div><div class="stack-name">Cilium</div><div class="stack-role">eBPF CNI + Hubble</div></div>
         </div>
-
-        <div class="stack-category">
-          <h4>Security</h4>
-          <div class="stack-items">
-            <div class="stack-item"><span>SOPS</span><span class="version">Age</span></div>
-            <div class="stack-item"><span>Cilium NetPol</span><span class="version">eBPF</span></div>
-            <div class="stack-item"><span>Tailscale</span><span class="version">Operator</span></div>
-            <div class="stack-item"><span>Pod Security</span><span class="version">Non-root</span></div>
-          </div>
+        <div class="stack-item fade-in">
+          <div class="stack-icon" style="background:rgba(251,191,36,0.15); color:#fbbf24;">H</div>
+          <div><div class="stack-name">Helm</div><div class="stack-role">Package management</div></div>
         </div>
-
-        <div class="stack-category">
-          <h4>Observability</h4>
-          <div class="stack-items">
-            <div class="stack-item"><span>Prometheus</span><span class="version">Stack</span></div>
-            <div class="stack-item"><span>Grafana</span><span class="version">Dashboards</span></div>
-            <div class="stack-item"><span>Hubble</span><span class="version">1.18.5</span></div>
-            <div class="stack-item"><span>k9s</span><span class="version">CLI</span></div>
-          </div>
+        <div class="stack-item fade-in">
+          <div class="stack-icon" style="background:rgba(167,139,250,0.15); color:#a78bfa;">Pg</div>
+          <div><div class="stack-name">CloudNativePG</div><div class="stack-role">HA PostgreSQL 15</div></div>
+        </div>
+        <div class="stack-item fade-in">
+          <div class="stack-icon" style="background:rgba(251,113,133,0.15); color:#fb7185;">So</div>
+          <div><div class="stack-name">SOPS + Age</div><div class="stack-role">Encrypted secrets</div></div>
+        </div>
+        <div class="stack-item fade-in">
+          <div class="stack-icon" style="background:rgba(52,211,153,0.15); color:#34d399;">vL</div>
+          <div><div class="stack-name">vLLM</div><div class="stack-role">GPU LLM inference</div></div>
+        </div>
+        <div class="stack-item fade-in">
+          <div class="stack-icon" style="background:rgba(251,191,36,0.15); color:#fbbf24;">K</div>
+          <div><div class="stack-name">KEDA</div><div class="stack-role">Event-driven scaling</div></div>
+        </div>
+        <div class="stack-item fade-in">
+          <div class="stack-icon" style="background:rgba(34,211,238,0.15); color:#22d3ee;">Gf</div>
+          <div><div class="stack-name">Grafana</div><div class="stack-role">Observability</div></div>
+        </div>
+        <div class="stack-item fade-in">
+          <div class="stack-icon" style="background:rgba(167,139,250,0.15); color:#a78bfa;">Re</div>
+          <div><div class="stack-name">Renovate</div><div class="stack-role">Auto dependency mgmt</div></div>
+        </div>
+        <div class="stack-item fade-in">
+          <div class="stack-icon" style="background:rgba(52,211,153,0.15); color:#34d399;">Ta</div>
+          <div><div class="stack-name">Tailscale</div><div class="stack-role">Secure VPN access</div></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Contact -->
-  <section id="contact" class="contact">
+  <!-- Workloads -->
+  <section id="workloads">
     <div class="container">
-      <h2>Let's build something that scales.</h2>
-      <p>Open for platform engineering roles, consulting, and collaborative projects.</p>
-      <div class="contact-links">
-        <a href="https://github.com/sirius0xdev/gcloud-lab" target="_blank" class="btn-primary">
-          ⬡ GitHub Repo
-        </a>
-        <a href="https://github.com/sirius0xdev" target="_blank" class="btn-secondary">
-          All Repositories
-        </a>
+      <p class="section-label">Workloads</p>
+      <h2 class="section-title">Real applications running in production</h2>
+      <p class="section-desc">From private AI inference to blockchain nodes — every workload proves Kubernetes platform versatility.</p>
+
+      <div class="workload-grid">
+        <div class="workload-card fade-in">
+          <h4>OpenClaw PAaaS</h4>
+          <p>Dual-tier vLLM architecture with Qwen models on L4 + A100 Spot GPUs. Scale-to-zero for 60-90% cost savings. Zero public ingress.</p>
+          <span class="lab-tag">gcloud-lab</span>
+        </div>
+        <div class="workload-card fade-in">
+          <h4>News Intelligence Pipeline</h4>
+          <p>Scrapy crawler (371 global financial feeds) → DeepSeek-R1 LLM analyst → Telegram bot delivering trading signals. Fully air-gapped.</p>
+          <span class="lab-tag">gcloud-lab</span>
+        </div>
+        <div class="workload-card fade-in">
+          <h4>N8N Automation</h4>
+          <p>Self-hosted workflow automation platform with PostgreSQL backend. Custom business logic, webhooks, and third-party integrations.</p>
+          <span class="lab-tag">gcloud-lab</span>
+        </div>
+        <div class="workload-card fade-in">
+          <h4>Zcash Full Node</h4>
+          <p>Zebrad full node + lightwallet gRPC service on Kubernetes. Multiple dedicated LoadBalancers for blockchain connectivity.</p>
+          <span class="lab-tag">lab</span>
+        </div>
+        <div class="workload-card fade-in">
+          <h4>Multipaper Minecraft</h4>
+          <p>Master + Velocity Proxy cluster with MariaDB backend (LuckPerms, Essentials, mcMMO). Database-backed multiplayer game servers.</p>
+          <span class="lab-tag">lab</span>
+        </div>
+        <div class="workload-card fade-in">
+          <h4>Prosody XMPP</h4>
+          <p>Full-featured Jabber messaging server with C2S, S2S, and HTTPS endpoints. Real-time communication infrastructure.</p>
+          <span class="lab-tag">lab</span>
+        </div>
+        <div class="workload-card fade-in">
+          <h4>Linkding Bookmarks</h4>
+          <p>Self-hosted bookmark manager with persistent storage and Ingress routing at linkding.sirius-sec.com.</p>
+          <span class="lab-tag">lab</span>
+        </div>
+        <div class="workload-card fade-in">
+          <h4>Hubble Network UI</h4>
+          <p>Cilium Hubble for network flow logs, service maps, and real-time network observability across all services.</p>
+          <span class="lab-tag">lab</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills">
+    <div class="container">
+      <p class="section-label">Expertise</p>
+      <h2 class="section-title">Combined technical mastery</h2>
+      <p class="section-desc">Core capabilities distilled from both lab environments.</p>
+
+      <div class="skills-grid">
+        <div class="skill-card fade-in">
+          <h4><span class="skill-dot" style="background:#22d3ee;"></span>Infrastructure & Platform</h4>
+          <ul>
+            <li>Multi-environment Kubernetes (GKE + kubeadm bare-metal)</li>
+            <li>Full IaC lifecycle: Terraform → Flux → Kustomize/Helm</li>
+            <li>Advanced CNI & service mesh: Cilium eBPF, BGP/L2, Hubble</li>
+            <li>HA database operators: CloudNativePG, MariaDB</li>
+          </ul>
+        </div>
+        <div class="skill-card fade-in">
+          <h4><span class="skill-dot" style="background:#34d399;"></span>AI / LLM Infrastructure</h4>
+          <ul>
+            <li>Private GPU-accelerated inference (vLLM, Qwen, DeepSeek-R1, Gemma2)</li>
+            <li>Cost-optimized Spot GPU strategies with intelligent tiering</li>
+            <li>Air-gapped / VPC-only AI pipelines for regulated clients</li>
+            <li>KEDA scale-to-zero for GPU workloads</li>
+          </ul>
+        </div>
+        <div class="skill-card fade-in">
+          <h4><span class="skill-dot" style="background:#fbbf24;"></span>Automation & DevEx</h4>
+          <ul>
+            <li>N8N for business process automation</li>
+            <li>CronJob-driven data pipelines with LLM analysis</li>
+            <li>Renovate-powered continuous dependency updates</li>
+            <li>Dev Containers + Mise standardized environments</li>
+          </ul>
+        </div>
+        <div class="skill-card fade-in">
+          <h4><span class="skill-dot" style="background:#fb7185;"></span>Security & Compliance</h4>
+          <ul>
+            <li>Git-native secret encryption (SOPS + Age)</li>
+            <li>Network policy enforcement via Cilium</li>
+            <li>Zero-trust access patterns (Tailscale, outbound-only)</li>
+            <li>Namespace isolation + internal-only observability</li>
+          </ul>
+        </div>
+        <div class="skill-card fade-in">
+          <h4><span class="skill-dot" style="background:#a78bfa;"></span>Observability & Reliability</h4>
+          <ul>
+            <li>Prometheus + Grafana + AlertManager end-to-end metrics</li>
+            <li>Hubble network flow maps and service topology</li>
+            <li>Health checks, probes, custom HTTPRoutes</li>
+            <li>Production-grade alerting and incident detection</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Value -->
+  <section id="value">
+    <div class="container">
+      <p class="section-label">Why it matters</p>
+      <h2 class="section-title">What I bring to your project</h2>
+      <p class="section-desc">Partnering with someone who maintains these labs means:</p>
+
+      <div class="value-list">
+        <div class="value-item fade-in">
+          <span class="value-check">✓</span>
+          <div><strong>Battle-tested production patterns</strong><span>Not toy examples — real clusters serving real workloads.</span></div>
+        </div>
+        <div class="value-item fade-in">
+          <span class="value-check">✓</span>
+          <div><strong>Real cost savings</strong><span>Spot GPUs, scale-to-zero, efficient networking — designed to save money.</span></div>
+        </div>
+        <div class="value-item fade-in">
+          <span class="value-check">✓</span>
+          <div><strong>Security-first design</strong><span>Encrypted secrets, private AI, network isolation baked in.</span></div>
+        </div>
+        <div class="value-item fade-in">
+          <span class="value-check">✓</span>
+          <div><strong>Future-proof skills</strong><span>GitOps, eBPF networking, LLM infrastructure — skills that last.</span></div>
+        </div>
+        <div class="value-item fade-in">
+          <span class="value-check">✓</span>
+          <div><strong>Diverse domain experience</strong><span>Finance pipelines, blockchain, gaming, automation, productivity.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>Let's build your next <span style="color:var(--text-tertiary)">Kubernetes platform</span> together.</h2>
+      <p>DevOps transformation, platform engineering, AI infrastructure, or custom hosting.</p>
+      <div class="hero-actions">
+        <a href="https://github.com/sirius0xdev" target="_blank" rel="noopener" class="btn btn-primary">View on GitHub ↗</a>
+        <a href="mailto:" class="btn btn-ghost">Get in touch</a>
       </div>
     </div>
   </section>
@@ -1130,12 +891,12 @@
   <!-- Footer -->
   <footer>
     <div class="container">
-      <p>Built with infrastructure, not excuses. © 2026 Sirius DevOps</p>
+      <p> sirius0xdev &middot; <a href="https://github.com/sirius0xdev/gcloud-lab" target="_blank" rel="noopener">gcloud-lab</a> &middot; <a href="https://github.com/sirius0xdev/lab" target="_blank" rel="noopener">lab</a> &middot; May 2026</p>
     </div>
   </footer>
 
+  <!-- Scroll animation script -->
   <script>
-    // Scroll reveal
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -1144,18 +905,7 @@
       });
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const target = document.querySelector(link.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
-    });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
   </script>
 </body>
 </html>

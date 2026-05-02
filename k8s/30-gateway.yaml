@@ -1,0 +1,58 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: static-pages-gateway
+  namespace: static-pages
+spec:
+  gatewayClassName: gke-l7-mrdp
+  listeners:
+    - name: https
+      protocol: HTTPS
+      port: 443
+      hostname: "siriusdevops.com"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: siriusdevops-com-tls
+    - name: https-paaas
+      protocol: HTTPS
+      port: 443
+      hostname: "paaas.siriusdevops.com"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: siriusdevops-com-tls
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: portfolio-route
+  namespace: static-pages
+spec:
+  parentRefs:
+    - name: static-pages-gateway
+      sectionName: https
+  hostnames:
+    - "siriusdevops.com"
+  rules:
+    - backendRefs:
+        - name: portfolio
+          port: 8080
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: paaas-route
+  namespace: static-pages
+spec:
+  parentRefs:
+    - name: static-pages-gateway
+      sectionName: https-paaas
+  hostnames:
+    - "paaas.siriusdevops.com"
+  rules:
+    - backendRefs:
+        - name: paaas
+          port: 8080
