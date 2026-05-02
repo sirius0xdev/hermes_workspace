@@ -26,3 +26,18 @@ spec:
               memory: 32Mi
             limits:
               memory: 64Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: paaas
+  namespace: static-pages
+  labels:
+    app: paaas
+spec:
+  selector:
+    app: paaas
+  ports:
+    - port: 8080
+      targetPort: 8080
+  type: ClusterIP
