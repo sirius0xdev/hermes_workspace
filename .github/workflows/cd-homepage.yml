@@ -1,11 +1,11 @@
-name: CD - PaaAS Landing Page
+name: CD - Homepage
 
 on:
   push:
     branches: [ "main" ]
     paths:
-      - 'paaas-landing/**'
-      - '.github/workflows/cd-paaas-landing.yml'
+      - 'homepage/**'
+      - '.github/workflows/cd-homepage.yml'
   workflow_dispatch:
 
 permissions:
@@ -32,14 +32,14 @@ jobs:
         with:
           images: ghcr.io/sirius0xdev/hermes_workspace
           tags: |
-            type=raw,value=paaas-landing
+            type=raw,value=homepage
             type=sha
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
-          context: ./paaas-landing
-          file: ./paaas-landing/Dockerfile.paaas
+          context: ./homepage
+          file: ./homepage/Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
